@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<div class="container" th:fragment="serviceInvoice">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        footer,h1,h2,h3{text-align: right;}
+        h1,h2{margin:0;padding:0;}
+        p{text-align: right; font-weight: normal; font-size: 12px;margin:0;padding:0;}
+        th{text-align:left;}
+        h5,h6{text-align: right; font-weight: normal; margin:0;padding:0;}
+    </style>
+    <style type='text/css'>
+    * { font-family: Verdana; }
+                #vertical thead,#vertical tbody{
+                display:inline-block;}
+       </style>
+
+</head>
+<body>
+
+    <h1 th:text="'Rēķins Nr. '+${invoice.getNumber()}"/>
+    <h2  th:text="${invoice.getStringDate()}"/>
+    <br></br>
+    <p th:text="'Apmaksāt līdz: '+${invoice.getStringDueDate()}"/>
+    <p>Apmaksas veids: pārskaitījums</p>
+<div>
+    <table id="vertical">
+
+        <tr>
+            <th>Pasūtītājs: </th>
+            <td th:text="${invoice.getCustomer().getName()}"/>
+        </tr>
+        <tr>
+            <th>Adrese: </th>
+            <td th:text="${invoice.getCustomer().getBillingAddress()}"/>
+        </tr>
+        <tr>
+            <th>PVN reģistrācijas Nr.: </th>
+            <td th:text="${invoice.getCustomer().getVatNumber()}"/>
+        </tr>
+        <tr>
+            <th>Norēķinu rekvizīti: </th>
+            <td th:text="${invoice.getCustomer().getBank()}"/>
+        </tr>
+        <tr>
+            <th>Konta Nr.: </th>
+            <td th:text="${invoice.getCustomer().getAccountNumber()}"/>
+        </tr>
+    </table>
+
+    <br></br>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th width="450px">Nosaukums</th>
+            <th width="100px">Summa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="line: ${invoice.getLines()}">
+            <td th:text="${line.getDescription()}"/>
+            <td th:text="${line.getSum()}"/>
+        </tr>
+        <tr>
+            <td style="text-align:right;" th:text="'Summa: '"/>
+            <td th:text="${invoice.getTotal()+' &euro;'}"/>
+        </tr>
+        <tr>
+            <td style="text-align:right;" th:text="'PVN 21%: '"/>
+            <td th:text="${#numbers.formatDecimal((invoice.getTotal()*0.21),1,2)+' &euro;'}"/>
+        </tr>
+        <tr>
+            <td style="text-align:right;" th:text="'Kopā: '"/>
+            <td th:text="${#numbers.formatDecimal((invoice.getTotal()+(invoice.getTotal()*0.21)),1,2)+' &euro;'}"/>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+<br></br>
+<br></br>
+<br></br>
+<div> Rēķins ir sagatavots elektroniski un ir derīgs bez paraksta</div>
+</body>
+</div>
+</html>

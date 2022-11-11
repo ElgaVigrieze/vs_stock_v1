@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/invoices/'+invoiceId+'/new_line/save'}" name="invoiceLineSaveDto">
+        <div class="mb-3">
+            <br><br/>
+            <span th:if="${addressPresent == false}" >
+               <label for="deliveryAddress">Piegādes adrese:</label><br/>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" ><br>
+            </span>
+
+            <label for="description">Rēķina teksts:</label><br/>
+            <textarea type="text" cols="70%" id="description" name="description" ></textarea>
+            <br>
+            <span th:if="${type == 'preču rēķins'}" >
+            <label for="quantity">Daudzums:</label><br/>
+            <input type="number" id="quantity" name="quantity" th:value="1"><br>
+            </span>
+            <label for="price">Cena:</label><br/>
+            <input type="number"  step="0.01" id="price" name="price"><br>
+            <br>
+            <button type="submit" class="btn btn-success">Saglabāt</button>
+            <br/>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

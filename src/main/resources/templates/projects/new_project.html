@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+
+    <form method="post" th:action="${'/new_project/'}" name="projectSaveDto">
+        <label for="title">Nosaukums</label>
+        <input type ="text" name="title" id="title">
+        <br>
+        <br>
+        <label for="location">Vieta</label>
+        <input type ="text" name="location" id="location">
+        <br>
+        <br>
+        <label for="date">Datums</label>
+        <input type ="date" name="date" id="date">
+        <br>
+        <br>
+        <label for="description">Apraksts</label>
+        <input type ="text" name="description" id="description">
+        <br>
+        <br>
+        <button type="submit"  class="btn btn-success" >Saglabāt</button>
+    </form>
+</div>
+</body>
+</html>

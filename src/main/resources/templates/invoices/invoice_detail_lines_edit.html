@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/invoices/'+invoiceId+'/lines/'+lineId+'/edit'}" name="invoiceLineSaveDto">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Apraksts</th>
+                <th>Cena</th>
+                <th>Daudzums</th>
+                <th>Pasākums</th>
+                <th></th>
+                <th></th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <textarea type="text" id="description" name="description" th:text="${line.getDescription()}"></textarea>
+                </td>
+                <td>
+                    <input type="number" name="price" step="0.01" th:value="${line.getPrice()}">
+                </td>
+                <td>
+                    <input type="number" name="quantity" th:value="${line.getQuantity()}">
+                </td>
+
+                <td>
+                    <select id="projectId" name="projectId">
+                        <option th:selected="${line.getProject() == null}" th:value=0>Nav</option>
+<!--                        <option th:selected="${line.getProject() != null}" th:value="${line.getProject().getId()}"-->
+<!--                                th:text="${line.getProject.getTitle()}" ></option>-->
+                        <option th:selected="${line.getProject() != null && line.getProject().getId() == project.getId()}"
+                                th:each="project : ${projects}"  th:value="${project.getId()}" th:text="${project.getTitle()}"></option>
+                        <!--                        <option th:each="project : ${projects}"-->
+                        <!--                                th:selected="${line.getProject() != null}" th:value="${line.getProject().getId()}"-->
+                        <!--                                th:text="${project.getTitle()}" ></option>-->
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <button class="btn btn-success"  role="button">Saglabāt</button>
+        <a th:href="${'/invoices/'+invoiceId+'/lines'}" class="btn btn-secondary"  role="button">Atpakaļ</a>
+        <br/>
+    </form>
+
+</div>
+</body>
+</html>

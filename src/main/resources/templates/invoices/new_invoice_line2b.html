@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/invoices/'+invoiceId+'/new_line/add'}" name="invoiceSaveDto">
+            <table>
+                <tr>
+                    <th>Rēķina Nr.: </th>
+                    <td th:text="${invoice.getNumber()}"/>
+                </tr>
+                <tr>
+                    <th>Datums: </th>
+                    <td th:text="${invoice.getDate()}"/>
+                </tr>
+                <tr>
+                    <th>Apmaksas datums: </th>
+                    <td th:text="${invoice.getDueDate()}"/>
+                </tr>
+                <tr>
+                    <th>Klients: </th>
+                    <td th:text="${invoice.getCustomer().getName()}"/>
+                </tr>
+
+                <tr>
+                    <th>Rinda: </th>
+                    <td th:text="${lastLine.getDescription()}"/>
+                    <td th:text="${lastLine.getSum()}"/>
+                </tr>
+
+
+            </table>
+
+        <button type="submit" class="btn btn-success">Atpakaļ</button>
+
+        <br/>
+    </form>
+
+</div>
+</body>
+</html>

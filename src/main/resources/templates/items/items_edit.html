@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+    <form method="post" th:action="${'/items/'+id}" >
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Attēls</th>
+                    <th>Kategorija</th>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr>
+                    <td> <a th:href="${'/items/'+id+'/upload'}"> <img th:src="@{${encoding}}" height="100px" width="100px"></a></td>
+                    <td >
+                        <select id="category" name="category" >
+<!--                            <option th:text="${item.getCategory()}"></option>-->
+                            <option th:each="category: ${categories}"
+                                    th:value="${category}"
+                                    th:text="${category}"
+                                    th:selected="${item.getCategory()==category}"></option>
+                        </select><br/>
+                        </select><br/>
+                    </td>
+
+                    <td >
+                        <input type="text" name="name" th:value="${item.getName()}">
+                    </td>
+                    <td >
+                        <input type="number" step="0.01" name="price"  th:value="${item.getPrice()}">
+                    </td>
+                    <td>
+                        <input type="checkbox" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td>
+                        <input type="number" name="totalCount"  th:value="${item.getTotalCount()}">
+                    </td>
+                    <td>
+
+                        <select id="location" name="location">
+                            <option th:each="location : ${locations}"
+                                    th:value="${location}"
+                                    th:text="${location}"
+                                    th:selected="${item.getLocation()==location}"></option>
+                        </select><br/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        <button type="submit" class="btn btn-success">Saglabāt</button>
+    </form>
+</div>
+</body>
+</html>

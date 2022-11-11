@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+    <style>
+        h2{text-align: right;}
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+
+    <div class="alert alert-danger confirmation-alert" role="alert" th:if="${confirmDelete != null}">
+<!--        Vai tiešām izdzēst<span th:text="confirmDelete.getTitle()"></span>?-->
+        Vai tiešām dzēst?
+        <a th:href="${'/projects/'+confirmDelete.getId()+'/delete'}" class="btn btn-danger" role="button">Dzēst</a>
+        <a th:href="${'/projects/'}" class="btn btn-secondary" role="button">Atcelt</a>
+    </div>
+
+
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/projects/'+projectId}">
+        <table>
+            <tr>
+                <th>Id: </th>
+                <td th:text="${project.getId()}"/>
+            </tr>
+            <tr>
+                <th>Nosaukums: </th>
+                <td th:text="${project.getTitle()}"/>
+            </tr>
+
+            <tr>
+                <th>Vieta: </th>
+                <td th:text="${project.getLocation()}"/>
+            </tr>
+
+            <tr>
+                <th>Datums: </th>
+                <td th:text="${project.getDate()}"/>
+            </tr>
+            <tr>
+                <th>Apraksts: </th>
+                <td th:text="${project.getDescription()}"/>
+            </tr>
+
+        </table>
+        <a th:href="${'/projects/'+projectId+'/update'}" class="btn btn-secondary"  role="button">Rediģēt pasākumu</a>
+        <a th:href="${'/projects/'+projectId+'/confirm'}" class="btn btn-danger" role="button">Dzēst pasākumu</a>
+        <a th:href="${'/projects/'+projectId+'/add'}" class="btn btn-success" role="button">Pievienot tehniku</a>
+        <a th:href="${'/projects/'+projectId+'/list/edit'}" class="btn btn-secondary" role="button">Rediģēt sarakstu</a>
+        <a th:target="_blank" th:href="${'/stocklist/'+projectId+'/preview'}" class="btn btn-secondary" role="button">Eksportēt PDF</a>
+        <a th:href="${'/projects/'+projectId+'/gallery'}" class="btn btn-secondary" role="button">Galerija</a>
+        <a th:href="${'/projects/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
+        <header ><h2 th:text="'Kopsumma: ' + ${sum} + ' EUR / '+${sumVat} + ' EUR'" > </h2></header>
+    </form>
+
+    <table class="table table-hover" style="width:100%">
+        <header ></header>
+        <thead>
+        <tr>
+            <th >Attēls</th>
+            <th>Nosaukums</th>
+<!--            <th>Kategorija</th>-->
+            <th >Daudzums</th>
+            <th>Cena</th>
+            <th>Izdarīts</th>
+            <th></th>
+            <th></th>
+        <tr/>
+        </thead>
+        <tbody>
+        <tr th:each="item: ${items}">
+            <td> <img th:src="${item.getPicEncoded()}" width="100px" height="100px"/></td>
+            <td th:text="${item.getName()}" />
+<!--            <td th:text="${item.getCategory()}"/>-->
+            <td>
+                <input type="number" style="width: 70px" readonly th:value="${item.getQuantity()}"/>
+            </td>
+            <td>
+                <input type="number" style="width: 70px"  readonly th:value="${item.getPrice()}"/>
+            </td>
+            <td>
+                <input type="checkbox"  disabled="disabled" id="done" name="done" th:checked="${item.isDone()}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    </div>
+</body>
+</html>

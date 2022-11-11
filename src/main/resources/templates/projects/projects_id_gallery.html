@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/projects/'+id+'/gallery'}" enctype="multipart/form-data">
+        <label path="file">Izvēlies attēlu: </label>
+        <input type="file" name="file" accept="image/*"/>
+        <br>
+        <br>
+<!--        <label path="file">Izvēlies attēlu: </label>-->
+<!--        <input type="file" name="file" />-->
+<!--        <br>-->
+<!--        <label path="file">Izvēlies attēlu: </label>-->
+<!--        <input type="file" name="file" />-->
+<!--        <br>-->
+        <button type="submit" class="btn btn-success">Saglabāt</button>
+        <a type="button" class="btn btn-secondary" th:href="${'/projects/'+id}">Atpakaļ</a>
+    </form>
+
+
+        <div th:each="pic: ${pics}">
+            <form method="post" th:action="${'/projects/'+id+'/gallery/'+pics.indexOf(pic)}">
+            <img th:src="@{${pic}}" th:value="${pics.indexOf(pic)}"/> <button type="submit" th:value="${pics.indexOf(pic)}" class="btn btn-danger">Dzēst</button>
+            </form>
+        </div>
+
+
+</div>
+</body>
+</html>

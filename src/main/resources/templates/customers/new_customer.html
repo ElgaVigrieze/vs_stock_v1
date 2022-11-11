@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+
+    <form method="post" th:action="${'/new_customer/'}" name="customerSaveDto">
+        <label for="name">Nosaukums</label>
+        <input type ="text" name="name" id="name">
+        <br>
+        <br>
+        <label for="vatNumber">PVN reģistrācijas Nr.</label>
+        <input type ="text" name="vatNumber" id="vatNumber">
+        <br>
+        <br>
+        <label for="billingAddress">Adrese</label>
+        <input type ="text" name="billingAddress" id="billingAddress">
+        <br>
+<!--        <br>-->
+<!--        <label for="deliveryAddress">Piegādes adrese</label>-->
+<!--        <input type ="text" name="deliveryAddress" id="deliveryAddress">-->
+<!--        <br>-->
+        <br>
+        <label for="bank">Banka</label>
+        <input type ="text" name="bank" id="bank">
+        <br>
+        <br>
+        <label for="swift">SWIFT kods</label>
+        <input type ="text" name="swift" id="swift">
+        <br>
+        <br>
+        <label for="accountNumber">Konta numurs</label>
+        <input type ="text" name="accountNumber" id="accountNumber">
+        <br>
+        <br>
+        <label for="eMail">E-pasta adrese</label>
+        <input type ="text" name="eMail" id="eMail">
+        <br>
+        <br>
+        <label for="phoneNumber">Telefona numurs</label>
+        <input type ="text" name="phoneNumber" id="phoneNumber">
+        <br>
+        <br>
+        <button type="submit"  class="btn btn-success" >Saglabāt</button>
+    </form>
+</div>
+</body>
+</html>

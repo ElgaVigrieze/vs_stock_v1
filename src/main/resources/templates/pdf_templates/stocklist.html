@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        h2{text-align: right;}
+        h1{text-align: center;}
+        th{text-align:left;}
+        table, th, td {border-style: dotted; border-color:#D3D3D3;border-collapse: collapse;}
+    </style>
+    <style type='text/css'>
+    * { font-family: Verdana; }
+       </style>
+</head>
+<body>
+<div th:replace="pdf_header :: pdfheader"></div>
+    <h1 th:text="'Cenu piedāvājums '+${title}"/>
+<table class="table table-hover" style="width:100%">
+    <header ></header>
+    <thead>
+    <tr>
+        <th></th>
+        <th>Nosaukums</th>
+        <th>Cena</th>
+        <th>Daudzums</th>
+        <th>Summa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item: ${items}">
+        <td> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
+        <td th:text="${item.getName()}" />
+        <td id= "price" th:text="${item.getPrice()}"/>
+        <td id= "quantity" th:text="${item.getQuantity()}"/>
+        <td th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${var}"/>
+    </tr>
+    </tbody>
+</table>
+<footer> <h2 th:text="'Kopā: ' + ${sum} + ' EUR'" > </h2>
+    <h2 th:text="'Kopā ar PVN: '+${sumVat} + ' EUR'" > </h2>
+</footer>
+</body>
+</html>

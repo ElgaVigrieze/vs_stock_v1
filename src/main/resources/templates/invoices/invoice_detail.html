@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 style="text-align: left; margin:10;padding:10;" th:text="${title}"></h1>
+
+        <div class="alert alert-danger confirmation-alert" role="alert" th:if="${confirmDelete != null}">
+            <!--        Vai tiešām izdzēst<span th:text="confirmDelete.getTitle()"></span>?-->
+            Vai tiešām dzēst?
+            <a th:href="${'/invoices/'+confirmDelete.getId()+'/delete'}" class="btn btn-danger" role="button">Dzēst</a>
+            <a th:href="${'/invoices/'+invoiceId}" class="btn btn-secondary" role="button">Atcelt</a>
+        </div>
+<!--            <table style="margin: 10px">-->
+<!--                <tr>-->
+<!--                    <th>Rēķina Nr.: </th>-->
+<!--                    <td th:text="${invoice.getNumber()}"/>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Datums: </th>-->
+<!--                    <td th:text="${invoice.getDate()}"/>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Apmaksas datums: </th>-->
+<!--                    <td th:text="${invoice.getDueDate()}"/>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Klients: </th>-->
+<!--                    <td th:text="${invoice.getCustomer().getName()}"/>-->
+<!--                </tr>-->
+<!--                <tr th:each="line: ${lines}">-->
+<!--                    <th>Rēķina rinda: </th>-->
+<!--                    <td th:text="${line.getDescription()}"/>-->
+<!--                    <td th:text="${line.getSum()}"/>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <th>Rēķina summa: </th>-->
+<!--                    <td th:text="${invoice.getTotal()}"/>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        <br>-->
+        <div style="margin-top: 5px">
+        <a th:href="${'/invoices/'+invoiceId+'/edit'}" class="btn btn-secondary"  role="button">Rediģēt rēķinu</a>
+        <a th:href="${'/invoices/'+invoiceId+'/confirm'}" class="btn btn-danger"  role="button">Dzēst rēķinu</a>
+            <a th:href="${'/invoices/'+invoiceId+'/preview'}" class="btn btn-success" th:target="_blank" role="button">Izveidot PDF</a>
+            <span th:if="${type == 'preču rēķins'}" >
+                <a th:href="${'/invoices/'+invoiceId+'/delivery'}" class="btn btn-success"  role="button">Izveidot pavadzīmi</a>
+            </span>
+        </div>
+        <div style="margin-top: 5px">
+        <a th:href="${'/invoices/'+invoiceId+'/add'}" class="btn btn-success"  role="button">Pievienot rindu</a>
+        <a th:href="${'/invoices/'+invoiceId+'/lines'}" class="btn btn-danger"  role="button">Dzēst vai rediģēt rindas</a>
+        <a th:href="${'/invoices'}" class="btn btn-secondary"  role="button">Atpakaļ</a>
+        <br/>
+        </div>
+</div>
+<div>
+<div th:if="${line == 0}" >
+    <span></span>
+</div>
+    <div th:if="${line != 0}" >
+<div th:switch="${type}">
+    <div th:case="'pavadzīme'" >
+        <div th:replace="fragments/delivery_invoice :: deliveryInvoice"></div>
+    </div>
+<div th:case="'preču rēķins'" >
+    <div th:replace="fragments/goods_invoice :: goodsInvoice"></div>
+</div>
+    <div th:case="'pakalpojumu rēķins'" >
+        <div th:replace="fragments/service_invoice :: serviceInvoice"></div>
+    </div>
+</div>
+</div>
+</body>
+</html>

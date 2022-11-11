@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<body>
+<style>
+                h2,h3,h1{text-align: right;}
+                h5{text-align: right; font-weight: normal;}
+    </style>
+<div class="container" th:fragment="pdfheader" style="background-color: white; width: 100%; height: 250px;">
+    <div style="width: 45%; float: left; padding-bottom:0px">
+          <img th:src="@{${logo}}" width="170px" height="170px"/>
+    </div>
+    <div style=" width: 55%; float: right; font-weight: normal;">
+        <div>
+      <h5>SIA "VentSystem.lv"</h5>
+        <h5>tel.: +371 25911891, +371 26160820</h5>
+          <h5>e-pasts: ventsystem@inbox.lv</h5></div>
+        <br></br>
+<div style="padding-bottom: 0px">
+        <h2 th:text="'Pavadzīme Nr. '+${invoice.getNumber()}"/>
+        <h4 style="text-align: right;" th:text="${invoice.getStringDate()}"/>
+        <p th:text="'Apmaksāt līdz: '+${invoice.getStringDueDate()}"/>
+        <p style="padding-bottom: 0px">Apmaksas veids: pārskaitījums</p>
+       </div>
+    </div>
+</div>
+</body>
+</html>

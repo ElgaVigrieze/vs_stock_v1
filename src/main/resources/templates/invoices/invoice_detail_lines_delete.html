@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+        <div>Vai tiešām dzēst?</div>
+
+    <form method="post" th:action="${'/invoices/'+invoiceId+'/lines/'+lineId+'/delete'}" >
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Apraksts</th>
+                <th>Summa</th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${line.getDescription()}"/>
+                <td th:text="${line.getSum()}"/>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+        <button class="btn btn-danger"  role="button">Dzēst</button>
+        <a th:href="${'/invoices/'+invoiceId+'/lines'}" class="btn btn-secondary"  role="button">Atpakaļ</a>
+        <br/>
+    </form>
+
+</div>
+</body>
+</html>

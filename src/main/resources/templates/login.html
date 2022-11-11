@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <body>
+    <div class="container">
+    <div th:if="${param.error}">
+        Nepareizs lietotājvārds un/vai parole.
+    </div>
+    <div th:if="${param.logout}">
+        Tu neesi pierakstījies
+    </div>
+    <form th:action="@{/login}" method="post">  <br>
+        <div><label> Lietotājvārds: <input type="text" name="username"/> </label></div>  <br>
+        <div><label> Parole: <input type="password" name="password"/> </label></div>  <br>
+        <div><input type="submit" value="Pierakstīties"/></div>
+    </form>
+    </div>
+    </body>
+</html>

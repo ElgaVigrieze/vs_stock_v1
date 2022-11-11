@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+ <form method="post" action="/new_project/add/confirm" >
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+<!--                <td>-->
+<!--                    <input type="number" readonly th:value="${item.getId()}" name="id"/>-->
+<!--                </td>-->
+                <td  th:text="${item.getId()}" th:value="${item.getId()}" name="id"/>
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getCategory()}"/>
+                <td>
+            <td th:each="quantity: ${quantities}">
+                <td th:text="${quantity}"/>
+<!--                    <div>-->
+<!--                        <input type="number"  name="quantity"/>-->
+
+<!--                    </div>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+     <button type="submit" class="btn btn-success">Save</button>
+ </form>
+
+
+</div>
+</body>
+</html>

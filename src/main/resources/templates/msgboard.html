@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/msgboard'}" >
+<!--            <input type="text" name="text" style="font-size:18pt;height:700px;width:500px;" th:value="${message}">-->
+        <textarea type="text" name="text" style="font-size:18pt;height:700px;width:500px;" th:text="${message}"></textarea>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-success">Saglabāt</button>
+    </form>
+    </div>
+</body>
+</html>

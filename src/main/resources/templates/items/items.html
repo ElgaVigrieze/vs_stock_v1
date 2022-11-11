@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<SCRIPT>
+function ShowAndHide(x) {
+    var x = document.getElementById(x);
+    if (x.style.display == 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+</SCRIPT>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+<div class="container">
+<h1 th:text="${title}"></h1>
+    <a href="/new_item">
+        <button class ="button1" style="height: 50px; width: 400px;" >
+            <h4>Izveidot jaunu tehnikas vienību</h4>
+        </button>
+    </a>
+
+    <h4 onclick="ShowAndHide('speakers')" th:value="speaker">Tumbas</h4>
+    <div id="speakers" style="display:none">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nosaukums</th>
+                <th>Cena</th>
+                <th>Aktīvs</th>
+                <th>Pieejamais skaits</th>
+                <th>Atrašanās vieta</th>
+                <th></th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${speakers}">
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getPrice()}"/>
+                <td>
+                    <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                </td>
+                <td th:text="${item.getTotalCount()}"/>
+                <td th:text="${item.getLocation()}"/>
+                <td>
+                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                        <img th:src="@{/img/pencil-square.svg}" width="30">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4 onclick="ShowAndHide('backline')" th:value="backline">Backline</h4>
+    <div id="backline" style="display:none">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nosaukums</th>
+                <th>Cena</th>
+                <th>Aktīvs</th>
+                <th>Pieejamais skaits</th>
+                <th>Atrašanās vieta</th>
+                <th></th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${backlines}">
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getPrice()}"/>
+                <td>
+                    <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                </td>
+                <td th:text="${item.getTotalCount()}"/>
+                <td th:text="${item.getLocation()}"/>
+                <td>
+                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                        <img th:src="@{/img/pencil-square.svg}" width="30">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4 onclick="ShowAndHide('mic')" th:value="mic">Mikrofoni</h4>
+    <div id="mic" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${mics}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+        </table>
+     </div>
+
+    <h4 onclick="ShowAndHide('console')" th:value="console">Pultis</h4>
+    <div id="console" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${consoles}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+    <h4 onclick="ShowAndHide('mspotlight')" th:value="mspotlight">Kustīgie prožektori</h4>
+    <div id="mspotlight" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Jauda</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${mspotlights}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPower()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+    <h4 onclick="ShowAndHide('nmspotlight')" th:value="nmspotlight">Fiksētie prožektori</h4>
+    <div id="nmspotlight" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Jauda</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${nmspotlights}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPower()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+
+        <h4 onclick="ShowAndHide('lights')" th:value="lights">Gaismu tehnika</h4>
+        <div id="lights" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Jauda</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${lights}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPower()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('video')" th:value="video">Video tehnika</h4>
+        <div id="video" style="display:none">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Nosaukums</th>
+                <th>Cena</th>
+                <th>Aktīvs</th>
+                <th>Pieejamais skaits</th>
+                <th>Atrašanās vieta</th>
+                <th></th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${video}">
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getPrice()}"/>
+                <td>
+                    <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                </td>
+                <td th:text="${item.getTotalCount()}"/>
+                <td th:text="${item.getLocation()}"/>
+                <td>
+                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                        <img th:src="@{/img/pencil-square.svg}" width="30">
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <h4 onclick="ShowAndHide('stand')" th:value="stand">Statīvi</h4>
+        <div id="stand" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${stands}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('cable')" th:value="cable">Kabeļi</h4>
+        <div id="cable" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${cables}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('truss')" th:value="truss">Fermas</h4>
+        <div id="truss" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Garums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${trusses}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getLength()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('stage')" th:value="stage">Skatuves tehnika</h4>
+        <div id="stage" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${stage}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+
+
+        <h4 onclick="ShowAndHide('transport')" th:value="transport">Transports</h4>
+        <div id="transport" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${transport}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('work')" th:value="work">Darbs</h4>
+        <div id="work" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${work}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <h4 onclick="ShowAndHide('misc')" th:value="misc">Citi</h4>
+        <div id="misc" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejamais skaits</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${misc}">
+                    <td th:text="${item.getName()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                    <td>
+                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
+                            <img th:src="@{/img/pencil-square.svg}" width="30">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+
+</div>
+</body>
+</html>

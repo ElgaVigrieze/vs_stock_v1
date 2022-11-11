@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+    <style>
+        h2{text-align: right;}
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+
+    <div class="alert alert-danger confirmation-alert" role="alert" th:if="${confirmDelete != null}">
+<!--        Vai tiešām izdzēst<span th:text="confirmDelete.getTitle()"></span>?-->
+        Vai tiešām dzēst?
+        <a th:href="${'/customers/'+confirmDelete.getId()+'/delete'}" class="btn btn-danger" role="button">Dzēst</a>
+        <a th:href="${'/customers/'}" class="btn btn-secondary" role="button">Atcelt</a>
+    </div>
+
+
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/customers/'+customerId}">
+        <table>
+            <tr>
+                <th>Nosaukums: </th>
+                <td th:text="${customer.getName()}"/>
+            </tr>
+
+            <tr>
+                <th>PVN reģistrācijas Nr.: </th>
+                <td th:text="${customer.getVatNumber()}"/>
+            </tr>
+
+            <tr>
+                <th>Adrese: </th>
+                <td th:text="${customer.getBillingAddress()}"/>
+            </tr>
+<!--            <tr>-->
+<!--                <th>Piegādes adrese: </th>-->
+<!--                <td th:text="${customer.getDeliveryAddress()}"/>-->
+<!--            </tr>-->
+            <tr>
+                <th>Bank: </th>
+                <td th:text="${customer.getBank()}"/>
+            </tr>
+            <tr>
+                <th>SWIFT kods: </th>
+                <td th:text="${customer.getSwift()}"/>
+            </tr>
+            <tr>
+                <th>Konta numurs: </th>
+                <td th:text="${customer.getAccountNumber()}"/>
+            </tr>
+            <tr>
+                <th>E-pasta adrese: </th>
+                <td th:text="${customer.getEMail()}"/>
+            </tr>
+            <tr>
+                <th>Telefona numurs: </th>
+                <td th:text="${customer.getPhoneNumber()}"/>
+            </tr>
+        </table>
+        <a th:href="${'/customers/'+customerId+'/update'}" class="btn btn-success"  role="button">Rediģēt klientu</a>
+        <a th:href="${'/customers/'+customerId+'/confirm'}" class="btn btn-danger" role="button">Dzēst klientu</a>
+        <a th:href="${'/customers/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
+    </form>
+    </div>
+</body>
+</html>

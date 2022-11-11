@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title1}"></h1>
+        <div class="alert alert-danger confirmation-alert" role="alert" th:if="${confirmDelete != null}">
+            <!--        Vai tiešām izdzēst<span th:text="confirmDelete.getTitle()"></span>?-->
+            Vai tiešām dzēst?
+            <a th:href="${'/invoices/'+confirmDelete.getId()+'/delete'}" class="btn btn-danger" role="button">Dzēst</a>
+            <a th:href="${'/invoices/'+invoiceId}" class="btn btn-secondary" role="button">Atcelt</a>
+        </div>
+
+        <table>
+            <tr>
+                <th>Rēķina Nr.: </th>
+                <td th:text="${invoice.getNumber()}"/>
+            </tr>
+            <tr>
+                <th>Datums: </th>
+                <td th:text="${invoice.getDate()}"/>
+            </tr>
+            <tr>
+                <th>Apmaksas datums: </th>
+                <td th:text="${invoice.getDueDate()}"/>
+            </tr>
+            <tr>
+                <th>Klients: </th>
+                <td th:text="${invoice.getCustomer().getName()}"/>
+            </tr>
+            <tr>
+                <th>Rēķina summa: </th>
+                <td th:text="${invoice.getTotal()}"/>
+            </tr>
+        </table>
+        <br>
+
+        <h1 th:text="${title2}"></h1>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Apraksts</th>
+                <th>Summa</th>
+                <th></th>
+                <th></th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="line: ${lines}">
+                <td th:text="${line.getDescription()}"/>
+                <td th:text="${line.getSum()}"/>
+                <td>      <a th:href = "${'/invoices/'+invoiceId+'/lines/'+line.getId()+'/delete'}">
+                    <img th:src="@{/img/trash-fill.svg}" width="25px">
+                </a><td>
+                <td>      <a th:href = "${'/invoices/'+invoiceId+'/lines/'+line.getId()+'/edit'}">
+                    <img th:src="@{/img/pencil-square.svg}" width="25px">
+                </a><td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a th:href="${'/invoices/'+invoiceId}" class="btn btn-secondary"  role="button">Atpakaļ</a>
+
+
+
+</div>
+</body>
+</html>

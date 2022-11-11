@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <form method="post" th:action="${'/customers/'+customerId+'/update'}">
+        <table>
+            <tr>
+                <th>Id: </th>
+                <td th:text="${customer.getId()}"/>
+            </tr>
+            <tr>
+                <th>Nosaukums: </th>
+                <td>
+                <input name="name" th:value="${customer.getName()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>PVN reģistrācijas numurs: </th>
+                <td>
+                <input name="vatNumber" th:value="${customer.getVatNumber()}"/>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Adrese: </th>
+                <td>
+                <input type="text" name="billingAddress" th:value="${customer.getBillingAddress()}"/>
+                </td>
+            </tr>
+<!--            <tr>-->
+<!--                <th>Piegādes adrese: </th>-->
+<!--                <td>-->
+<!--                <input name="deliveryAddress" th:value="${customer.getDeliveryAddress()}"/>-->
+<!--                </td>-->
+<!--            </tr>-->
+            <tr>
+                <th>Banka: </th>
+                <td>
+                    <input name="bank" th:value="${customer.getBank()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>SWIFT kods: </th>
+                <td>
+                    <input name="swift" th:value="${customer.getSwift()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Konta numurs: </th>
+                <td>
+                    <input name="accountNumber" th:value="${customer.getAccountNumber()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>E-pasts: </th>
+                <td>
+                    <input name="EMail" th:value="${customer.getEMail()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Telefona numurs: </th>
+                <td>
+                    <input name="EMail" th:value="${customer.getPhoneNumber()}"/>
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" class="btn btn-success">Saglabāt</button>
+        <a th:href="${'/customers/'+customerId}" class="btn btn-secondary" role="button">Atcelt</a>
+
+    </form>
+
+
+    </div>
+</body>
+</html>

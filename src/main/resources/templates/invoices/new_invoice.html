@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/new_invoice/'+invoiceId}" name="invoiceSaveDto">
+        <div class="mb-3">
+            <br><br/>
+            <label for="type">Dokumenta veids:</label>
+            <select id="type" name="type">
+                <option ></option>
+                <option th:each="type : ${types}"
+                        th:value="${type}"
+                        th:text="${type}"></option>
+            </select><br><br/>
+            <label for="customerId">Klients:</label>
+            <select id="customerId" name="customerId">
+                <option ></option>
+                <option th:each="customer : ${customers}"
+                        th:value="${customer.getId()}"
+                        th:text="${customer.getName()}"></option>
+            </select><br><br/>
+            <label for="date">Rēķina datums:</label>
+            <input type="date" name="date" id="date"><br><br/>
+            <label for="dueDate">Rēķina apmaksas datums:</label>
+            <input type="date" name="dueDate" id="dueDate"><br><br/>
+            <label for="comment">Komentārs:</label><br/>
+            <textarea type="text" id="comment" name="comment" ></textarea>
+            <br><br/>
+            <button type="submit" class="btn btn-success">Saglabāt</button>
+            <br/>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

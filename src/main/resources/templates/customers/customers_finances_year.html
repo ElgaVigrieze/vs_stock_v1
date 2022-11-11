@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+        <header ><h2 style="text-align: right;" th:text="'Kopsumma: ' +${totalTurnover} + ' EUR'" > </h2></header>
+        <table class="sortable; table table-hover">
+            <tr>
+                <th style="border">Nosaukums</th>
+                <th>Rēķinu summa, EUR</th>
+                <th>Apgrozījuma daļa, %</th>
+            <tr/>
+
+            <tr class="item" th:each="customer: ${customers}">
+                <td>
+                    <a th:href="${'/customers/'+customer.getId()}" th:text="${customer.getName()}"></a>
+                </td>
+                <td th:text="${customer.getSumOfAllInvoicesPerCustomerPerYear(customer.getId(),year)}"/>
+                <td th:text="${customer.getPercentageOfTurnoverPerYear(customer.getId(),year)}"/>
+
+            </tr>
+
+        </table>
+
+
+
+
+    </div>
+</body>
+</html>

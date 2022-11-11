@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+    <div th:replace="fragments/headerstyle :: mystyle"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: myheader"></div>
+    <div class="container">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" th:action="${'/invoices/'+invoiceId+'/edit'}" name="invoiceSaveDto">
+            <table>
+                <tr>
+                    <th>Rēķina Nr.: </th>
+                    <td th:text="${invoice.getNumber()}"/>
+                </tr>
+                <tr>
+                    <th>Datums: </th>
+                    <td>
+                    <input type="date" name="date" th:value="${invoice.getDate()}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Apmaksas datums: </th>
+                    <td>
+                    <input type="date" name="dueDate"th:value="${invoice.getDueDate()}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Klients: </th>
+                    <td>
+                        <select id="customerId" name="customerId">
+                            <option th:each="customer : ${customers}"
+                                    th:value="${customer.getId()}"
+                                    th:text="${customer.getName()}"  th:selected="${invoice.getCustomer().getId()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Komentārs:</th><br/>
+                        <td>
+                    <textarea type="text" cols="70%" id="comment" name="comment" th:text="${invoice.getComment()}"></textarea>
+                        </td>
+                </tr>
+            </table>
+
+        <button type="submit" class="btn btn-success">Saglabāt</button>
+        <a th:href="${'/invoices/'}" class="btn btn-secondary"  role="button">Atpakaļ</a>
+        <br/>
+    </form>
+
+</div>
+</body>
+</html>
