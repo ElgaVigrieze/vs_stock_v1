@@ -12,4 +12,5 @@ public class ProjectSaveDto {
     private String location;
     private String date;
     private String description;
+    private String validDate;
 }

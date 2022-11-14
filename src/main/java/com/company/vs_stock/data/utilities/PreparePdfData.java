@@ -39,12 +39,14 @@ public class PreparePdfData {
         var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
         var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
         var title = project.getTitle();
+        var validDate = project.getValidDate();
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("items", sortedItems);
         data.put("sum", sum);
         data.put("sumVat", sumVat);
         data.put("logo",LOGO);
+        data.put("validDate", validDate);
 
         return data;
     }
