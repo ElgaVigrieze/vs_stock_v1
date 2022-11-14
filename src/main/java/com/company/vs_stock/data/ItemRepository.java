@@ -1,6 +1,5 @@
 package com.company.vs_stock.data;
 
-import org.springframework.data.jpa.repository.Modifying;
 import com.company.vs_stock.data.Items.*;
 import com.company.vs_stock.data.enums.Category;
 import com.company.vs_stock.data.invoice.Invoice;
@@ -14,7 +13,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

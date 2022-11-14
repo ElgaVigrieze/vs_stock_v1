@@ -1,8 +1,6 @@
 package com.company.vs_stock.data.utilities;
 
-import com.itextpdf.text.DocumentException;
 import com.lowagie.text.pdf.BaseFont;
-import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.thymeleaf.TemplateEngine;
@@ -11,12 +9,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.xhtmlrenderer.pdf.ITextFontResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Map;
 
