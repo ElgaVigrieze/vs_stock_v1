@@ -25,28 +25,28 @@
             <thead>
                 <tr>
                     <th>Nosaukums</th>
-                    <th>Pieejamais skaits</th>
-                    <th>Daudzums</th>
+                    <th>Pieejams</th>
+                    <th style="width: 100px" >Skaits</th>
                     <th>Cena</th>
-                    <th>Pielāgota cena</th>
+                    <th style="width: 150px">Pielāgota cena</th>
                     <th>Izdarīts</th>
                     <th></th>
                 <tr/>
             </thead>
         <tbody>
         <tr th:each="item: ${items}">
-            <td th:text="${item.getName()}"/>
-            <td th:text="${item.getTotalCount()}"></td>
+            <td style="width:500px" th:text="${item.getName()}"/>
+            <td style="width:70px"  th:text="${item.getTotalCount()}"></td>
             <td>
-                <input type="number" style="width: 70px" name="quantity" th:placeholder="${item.getQuantity()}"/>
+                <input style="width:70px"  type="number"  name="quantity" th:placeholder="${item.getQuantity()}"/>
             </td>
 
-            <td th:text="${item.getOriginalPrice()}"></td>
-            <td><input type="number" style="width: 70px" name="price" th:placeholder="${item.getPrice()}"/></td>
-            <td>
+            <td style="width: 70px" th:text="${item.getOriginalPrice()}"></td>
+            <td> <input type="number" style="width: 70px" name="price" th:placeholder="${item.getPrice()}"/></td>
+            <td style="width: 70px" >
                 <input type="checkbox" name="done" th:value="${item.getId()}" th:checked="${item.isDone()}">
             </td>
-            <td>
+            <td style="width: 70px">
                 <a class="navbar-brand" th:href="${'/projects/'+projectId+'/list/delete/'+item.getId()}" name="id" th:value="${item.getId()}">
                     <img th:src="@{/img/trash-fill.svg}" width="30">
                 </a>

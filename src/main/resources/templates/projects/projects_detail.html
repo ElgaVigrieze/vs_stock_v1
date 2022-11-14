@@ -52,7 +52,7 @@
         <a th:href="${'/projects/'+projectId+'/confirm'}" class="btn btn-danger" role="button">Dzēst pasākumu</a>
         <a th:href="${'/projects/'+projectId+'/add'}" class="btn btn-success" role="button">Pievienot tehniku</a>
         <a th:href="${'/projects/'+projectId+'/list/edit'}" class="btn btn-secondary" role="button">Rediģēt sarakstu</a>
-        <a th:target="_blank" th:href="${'/stocklist/'+projectId+'/preview'}" class="btn btn-secondary" role="button">Eksportēt PDF</a>
+        <a th:target="_blank" th:href="${'/projects/'+projectId+'/date'}" class="btn btn-secondary" role="button">Eksportēt PDF</a>
         <a th:href="${'/projects/'+projectId+'/gallery'}" class="btn btn-secondary" role="button">Galerija</a>
         <a th:href="${'/projects/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
         <header ><h2 th:text="'Kopsumma: ' + ${sum} + ' EUR / '+${sumVat} + ' EUR'" > </h2></header>
@@ -62,14 +62,11 @@
         <header ></header>
         <thead>
         <tr>
-            <th >Attēls</th>
-            <th>Nosaukums</th>
-<!--            <th>Kategorija</th>-->
-            <th >Daudzums</th>
-            <th>Cena</th>
-            <th>Izdarīts</th>
-            <th></th>
-            <th></th>
+            <th style="width: 70px" >Attēls</th>
+            <th style="width: 300px" >Nosaukums</th>
+            <th style="width: 70px" >Skaits</th>
+            <th style="width: 70px" >Cena</th>
+            <th style="width: 70px" >Izdarīts</th>
         <tr/>
         </thead>
         <tbody>
@@ -83,7 +80,7 @@
             <td>
                 <input type="number" style="width: 70px"  readonly th:value="${item.getPrice()}"/>
             </td>
-            <td>
+            <td style="width: 70px" >
                 <input type="checkbox"  disabled="disabled" id="done" name="done" th:checked="${item.isDone()}">
             </td>
         </tr>

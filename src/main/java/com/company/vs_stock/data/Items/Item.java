@@ -62,7 +62,7 @@ public class Item {
         this.price = price;
         this.pic = pic;
         this.isActive = isActive;
-        this.category = String.valueOf(category);
+        this.category = category.getLabel();
         this.location = location;
         this.totalCount = totalCount;
 
@@ -84,7 +84,7 @@ public class Item {
         this.price = price;
         this.isActive = isActive;
         this.location = location;
-        this.category= String.valueOf(category);
+        this.category = category.getLabel();
         this.totalCount = totalCount;
 
     }

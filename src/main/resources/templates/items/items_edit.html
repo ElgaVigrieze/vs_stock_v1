@@ -19,7 +19,7 @@
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                 <tr/>
                 </thead>
@@ -38,16 +38,16 @@
                     </td>
 
                     <td >
-                        <input type="text" name="name" th:value="${item.getName()}">
+                        <input style="width: 400px;" type="text" name="name" th:value="${item.getName()}">
                     </td>
-                    <td >
-                        <input type="number" step="0.01" name="price"  th:value="${item.getPrice()}">
+                    <td  >
+                        <input style="width: 70px;" type="number" step="0.01" name="price"   th:value="${item.getPrice()}" >
                     </td>
                     <td>
                         <input type="checkbox" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td>
-                        <input type="number" name="totalCount"  th:value="${item.getTotalCount()}">
+                        <input  style="width: 70px;" type="number" name="totalCount"  th:value="${item.getTotalCount()}">
                     </td>
                     <td>
 

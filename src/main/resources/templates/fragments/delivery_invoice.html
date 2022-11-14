@@ -37,10 +37,6 @@
             <td th:text="${invoice.getCustomer().getBillingAddress()}"/>
         </tr>
         <tr>
-            <th>Piegādes adrese: </th>
-            <td th:text="${invoice.getDeliveryAddress()}"/>
-        </tr>
-        <tr>
             <th>PVN reģistrācijas Nr.: </th>
             <td th:text="${invoice.getCustomer().getVatNumber()}"/>
         </tr>
@@ -51,6 +47,10 @@
         <tr>
             <th>Konta Nr.: </th>
             <td th:text="${invoice.getCustomer().getAccountNumber()}"/>
+        </tr>
+        <tr>
+            <th>Piegādes adrese: </th>
+            <td th:text="${invoice.getDeliveryAddress()}"/>
         </tr>
     </table>
     <br></br>

@@ -7,6 +7,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.company.vs_stock.data.utilities.DateConverter.formatDate;
+
 @Data
 @Getter
 @Setter
@@ -34,7 +37,10 @@ public class Project {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name="stock_list", joinColumns=@JoinColumn(name="project_id"), inverseJoinColumns=@JoinColumn(name="item_id"))
     private List<StockListItem> items;
-
+//    @Column(name="invoiced")
+//    private boolean isInvoiced;
+@Column(name="offer_valid")
+private LocalDate offerValid;
 
 
     public Project(long id, String title, String location, LocalDate date, String description) {
@@ -70,5 +76,9 @@ public class Project {
 
     public List<StockListItem> getItems() {
         return items;
+    }
+
+    public String getValidDate(){
+        return formatDate(getOfferValid());
     }
 }

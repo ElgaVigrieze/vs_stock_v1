@@ -9,18 +9,11 @@
 <div th:replace="fragments/header :: myheader"></div>
 <div class="container">
 <h1 th:text="${title}"></h1>
-    <form method="post" th:action="${'/invoices/'}" name="customerDto">
-        <label for="customerId">Atlasīt pēc klienta:</label>
-        <select id="customerId" name="customerId">
-            <option></option>
-            <option th:each="customer : ${customers}"
-                    th:value="${customer.getId()}"
-                    th:text="${customer.getName()}"></option>
-        </select>
-        <button type="submit" class ="btn btn-success">Atlasīt</button>
-        <a href="/new_invoice" class="btn btn-success"> Jauns rēķins</a>
-        <a href="/unpaid" class ="btn btn-danger">Nesamaksātie rēķini</a>
-    </form>
+
+
+    <a href="/new_invoice" class="btn btn-success"> Jauns rēķins</a>
+    <a href="/invoices" class ="btn btn-danger">Visi rēķini</a>
+        <br>
         <br>
         <form method="post" th:action="${'/invoices/paid'}" name="invoiceSaveDto">
             <button type="submit" class="btn btn-success" style="">Saglabāt izmaiņas</button>

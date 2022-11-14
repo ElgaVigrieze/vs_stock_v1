@@ -10,7 +10,7 @@
 <div th:replace="fragments/header :: myheader"></div>
     <div class="container">
     <h1 th:text="${title}"></h1>
-
+        <a th:href="${'/customers/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
     <h4 th:each="year : ${years}">
     <a th:href="${'/customers/finances/'+year}" th:text="${year}"></a>
     </h4>

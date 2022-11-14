@@ -7,17 +7,14 @@
         body {font-family: "Comic Sans";}
 
     </style>
-<div class="container" th:fragment="pdfheader" style="background-color: white; width: 100%; height: 250px;">
+<div class="container" th:fragment="pdfheader" style="background-color: white; width: 100%; height: 130px;">
     <div style="width: 50%; float: left;">
-          <img th:src="@{${logo}}" width="170px" height="170px"/>
+          <img th:src="@{${logo}}" width="130px" height="130px"/>
     </div>
-    <div style=" width: 50%; float: left;">
-      <h3>SIA "VentSystem.lv"</h3>
-        <h3>Lielais prospekts 18-11, Ventspils, LV-3601</h3>
-          <h3>LV41203041233</h3>
-            <h3>A/S "Swedbank"</h3>
-              <h3>LV51HABA0551031251238</h3>
-
+    <div style=" width: 50%; float: right;">
+      <div style="font-size:18px;text-align:right">SIA "VentSystem.lv"</div>
+        <div style="font-size:16px;text-align:right">Andris +371 26160820</div>
+        <div style="font-size:16px;text-align:right">Kaspars +371 25911891</div>
     </div>
 </div>
 </body>

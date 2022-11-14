@@ -32,12 +32,13 @@
             <label for="dueDate">Rēķina apmaksas datums:</label>
             <input type="date" name="dueDate" id="dueDate"><br><br/>
             <label for="comment">Komentārs:</label><br/>
-            <textarea type="text" id="comment" name="comment" ></textarea>
+            <textarea type="text" rows="2" cols="100" id="comment" name="comment" ></textarea>
             <br><br/>
             <button type="submit" class="btn btn-success">Saglabāt</button>
             <br/>
         </div>
     </form>
+        <a th:href="${'/invoices/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
 
 </div>
 </body>

@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.company.vs_stock.data.utilities.DateConverter.convertStringToDate;
+import static com.company.vs_stock.data.utilities.DateConverter.formatDate;
 import static com.company.vs_stock.data.utilities.ImageDisplay.displayImageFromPath;
 import static com.company.vs_stock.data.utilities.ImageDisplay.uploadPathProject;
 import static com.company.vs_stock.data.utilities.PreparePdfData.setPdfDataStocklist;
@@ -35,8 +36,6 @@ public class ProjectController {
 
     private ItemRepository repo;
     private ProjectRepository repo1;
-
-
 
     public ProjectController() {
         repo = new ItemRepository();
@@ -81,34 +80,39 @@ public class ProjectController {
         var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
         var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
         var title = project.getTitle();
-
         model.addAttribute("title", title);
         model.addAttribute("items", sortedItems);
         model.addAttribute("project", project);
         model.addAttribute("sum", sum);
         model.addAttribute("sumVat", sumVat);
-
         return "projects/projects_detail";
     }
 
-    @GetMapping("/stocklist/{projectId}/preview")
-public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable long projectId) throws IOException {
-    var project = (Project)repo1.getProject(projectId);
-    var sortedItems = repo1.getStockListItemsSorted(project);
-    var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
-    var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
-    var title = project.getTitle();
+    @GetMapping("/projects/{projectId}/date")
+    public ModelAndView addDate(Model model, @PathVariable long projectId) throws IOException {
+        var p = (Project)repo1.getProject(projectId);
+        if(p.getOfferValid() == null){
+            return new ModelAndView( "projects/valid_date");
+        }
+        return new ModelAndView("redirect:/projects/{projectId}/preview");
+    }
 
-    model.addAttribute("title", title);
-    model.addAttribute("items", sortedItems);
-    model.addAttribute("project", project);
-    model.addAttribute("sum", sum);
-    model.addAttribute("sumVat", sumVat);
+    @PostMapping("/projects/{projectId}/date")
+    public ModelAndView addDate1(Model model, @PathVariable long projectId, ProjectSaveDto dto) throws IOException {
+        var p = (Project)repo1.getProject(projectId);
+            var validDate = convertStringToDate(dto.getValidDate());
+            var projectUpdate = new Project(projectId, p.getTitle(), p.getLocation(), p.getDate(), p.getDescription(), p.getPics(),p.getItems(), validDate);
+            repo1.updateProject(projectUpdate);
+        return new ModelAndView("redirect:/projects/{projectId}/preview");
+    }
 
-    PdfFileExporter pdfFileExporter = new PdfFileExporter();
-    Map<String, Object> data = setPdfDataStocklist(projectId);
-    String pdfFileName = "C:\\jar\\pdf\\offers\\offer_"+title+".pdf";
-
+    @GetMapping("/projects/{projectId}/preview")
+    public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable long projectId) throws IOException {
+        var project = (Project)repo1.getProject(projectId);
+        var title = project.getTitle();
+        PdfFileExporter pdfFileExporter = new PdfFileExporter();
+        Map<String, Object> data = setPdfDataStocklist(projectId);
+        String pdfFileName = "C:\\jar\\pdf\\offers\\offer_"+title+".pdf";
         return pdfFileExporter.showPdfFilePreview("stocklist", data, pdfFileName);
     }
 
@@ -119,7 +123,6 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
         model.addAttribute("title", project.getTitle());
         model.addAttribute("project", project);
         model.addAttribute("confirmDelete", project);
-
         return "projects/projects_detail";
     }
 
@@ -173,7 +176,7 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
         } else {
             description = dto.getDescription();
         }
-        var projectUpdate = new Project(projectId, title, location, date, description,project.getPics(), project.getItems());
+        var projectUpdate = new Project(projectId, title, location, date, description,project.getItems(),project.getPics());
         repo1.updateProject(projectUpdate);
         return new ModelAndView("redirect:/projects/{projectId}");
     }
@@ -197,16 +200,12 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
         var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
         var sumVat = String.format("%.2f",(repo.getProjectSum(sortedItems)*1.21));
         var title = project.getTitle();
-
         model.addAttribute("title", title);
         model.addAttribute("items", sortedItems);
         model.addAttribute("sum", sum);
         model.addAttribute("sumVat", sumVat);
-
         return new ModelAndView("redirect:/projects/{projectId}");
     }
-
-
 
     @PostMapping("/projects/{projectId}/list/edit")
     public ModelAndView editProjectListPost(@PathVariable long projectId, @ModelAttribute ItemSaveDto2 dto, Model model) {
@@ -340,20 +339,10 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
     public ModelAndView uploadGallery (@RequestParam("file") MultipartFile[] files, @PathVariable long id) throws IOException {
         var p = (Project)repo1.getProject(id);
         var filePaths = "";
-        if(p.getPics()== null){
-            for (int i = 0; i < files.length; i++) {
-                if(!Objects.equals(files[i].getOriginalFilename(), "")) {
-                    String filename = files[i].getOriginalFilename();
-                    String newPath = uploadPathProject + filename;
-                    files[i].transferTo(new File(newPath));
-                    String pic = filename;
-                    filePaths += pic + ";";
-                }
-        }
-    }
-        if(p.getPics() != null){
-            for (int i = 0; i < files.length; i++) {
-                if (!Objects.equals(files[i].getOriginalFilename(), "")) {
+        var picsInDb = p.getPics().split(";");
+        if(!Objects.equals(files[0].getOriginalFilename(), "")){
+            if(picsInDb != null) {
+                for (int i = 0; i < files.length; i++) {
                     String filename = files[i].getOriginalFilename();
                     String newPath = uploadPathProject + filename;
                     files[i].transferTo(new File(newPath));
@@ -361,8 +350,19 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
                     filePaths += p.getPics() + pic + ";";
                 }
             }
-        }
-        repo1.updateProject(new Project(p.getId(), p.getTitle(), p.getLocation(), p.getDate(), p.getDescription(),filePaths,p.getItems()));
+            if(picsInDb== null){
+                for (int i = 0; i < files.length; i++) {
+                    if(!Objects.equals(files[i].getOriginalFilename(), "")) {
+                        String filename = files[i].getOriginalFilename();
+                        String newPath = uploadPathProject + filename;
+                        files[i].transferTo(new File(newPath));
+                        String pic = filename;
+                        filePaths += pic + ";";
+                    }
+                }
+            }
+            repo1.updateProject(new Project(p.getId(), p.getTitle(), p.getLocation(), p.getDate(), p.getDescription(),p.getItems(),filePaths));
+         }
         return new ModelAndView("redirect:/projects/{id}/gallery");
     }
 
@@ -382,8 +382,7 @@ public ResponseEntity<InputStreamResource> viewPdf(Model model, @PathVariable lo
         if(newPics.equals("")){
             newPics = null;
         }
-        repo1.updateProject(new Project(p.getId(), p.getTitle(), p.getLocation(), p.getDate(), p.getDescription(),newPics,p.getItems()));
-
+        repo1.updateProject(new Project(p.getId(), p.getTitle(), p.getLocation(), p.getDate(), p.getDescription(),p.getItems(),newPics));
         return new ModelAndView("redirect:/projects/{id}/gallery");
     }
 }

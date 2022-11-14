@@ -75,6 +75,22 @@ public class InvoiceRepository {
         return new ArrayList<>();
     }
 
+    public Iterable<Invoice> getUnpaidInvoices() {
+        var session = factory.openSession();
+
+        try {
+            var sql = "FROM Invoice where paid=:paid ORDER BY id DESC";
+            var query = session.createQuery(sql);
+            query.setParameter("paid", false);
+            return query.list();
+        } catch (HibernateException exception) {
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
+        return new ArrayList<>();
+    }
+
     public Iterable<Invoice> getBaseInvoices() {
         var session = factory.openSession();
         try {

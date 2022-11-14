@@ -6,6 +6,7 @@ import com.company.vs_stock.data.invoice.Invoice;
 import com.company.vs_stock.data.invoice.InvoiceLine;
 import com.company.vs_stock.data.project.Project;
 import com.company.vs_stock.data.utilities.PdfFileExporter;
+import com.company.vs_stock.dto.CustomerDto;
 import com.company.vs_stock.dto.InvoiceLineSaveDto;
 import com.company.vs_stock.dto.InvoiceSaveDto;
 import org.springframework.core.io.InputStreamResource;
@@ -45,7 +46,6 @@ public class InvoiceController {
         types.remove(DocType.DELIVERY_INVOICE.getValue());
         Iterable<Customer> customers = repo2.getCustomers();
         var lastInvoice = (Invoice)repo.getLastInvoice();
-        System.out.println("iepriekšējā rēķina numurs "+lastInvoice.getId());
         var invoiceId = lastInvoice.getId()+1;
         model.addAttribute("title", "Izveidot jaunu rēķinu");
         model.addAttribute("types", types);
@@ -215,10 +215,49 @@ public class InvoiceController {
         var invoices = repo.getInvoices();
         var invoice = new Invoice();
         var totalTurnover = repo.getTotalTurnover();
+        var repo1 = new CustomerRepository();
+        var customers = repo1.getCustomers();
+        model.addAttribute("customers", customers);
         model.addAttribute("invoices", invoices);
         model.addAttribute("invoice", invoice);
         model.addAttribute("totalTurnover", totalTurnover);
         return "invoices/invoices";
+    }
+
+    @PostMapping("/invoices")
+    public String invoicesPerCustomer(Model model, CustomerDto dto) {
+        var customerId = dto.getCustomerId();
+        var invoices = repo.getAllInvoicesPerCustomer(customerId);
+//        var totalTurnover = repo.getTotalTurnoverPer();
+        var repo1 = new CustomerRepository();
+        var customers = repo1.getCustomers();
+        model.addAttribute("customers", customers);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("invoices", invoices);
+//        model.addAttribute("invoice", invoice);
+//        model.addAttribute("totalTurnover", totalTurnover);
+        return "invoices/invoices_filtered";
+    }
+
+//    @GetMapping("/invoices/customers/{customerId}")
+//    public String invoicesPerCustomer1(@PathVariable long customerId, Model model) {
+//        var invoices = repo.getAllInvoicesPerCustomer(customerId);
+////        var totalTurnover = repo.getTotalTurnoverPer();
+//        var repo1 = new CustomerRepository();
+//        var customers = repo1.getCustomers();
+//        model.addAttribute("customers", customers);
+//        model.addAttribute("customerId", customerId);
+//        model.addAttribute("invoices", invoices);
+////        model.addAttribute("invoice", invoice);
+////        model.addAttribute("totalTurnover", totalTurnover);
+//        return "invoices/invoices_filtered";
+//    }
+
+    @GetMapping("/unpaid")
+    public String invoicesUnpaid(Model model) {
+        var invoices = repo.getUnpaidInvoices();
+        model.addAttribute("invoices", invoices);
+        return "invoices/unpaid";
     }
 
     @GetMapping("/invoices/{invoiceId}")

@@ -11,20 +11,8 @@
 <div th:replace="fragments/header :: myheader"></div>
     <div class="container">
     <h1 th:text="${title}"></h1>
-        <a href="/new_customer">
-            <button class ="button1"  >
-                <h4>Izveidot<br>jaunu<br>klientu<br></h4>
-
-                <img th:src="@{/img/forward.svg}" alt="Forward" float="right" width="30">
-            </button>
-        </a>
-        <a href="/customers/finances">
-            <button class="button2"  >
-                <h4>Pārskats<br>pa<br>gadiem</h4>
-
-                <img th:src="@{/img/up.svg}" alt="Forward" float="right" width="30">
-            </button>
-        </a>
+        <a href="/new_customer" class="btn btn-success">Jauns klients</a>
+        <a href="/customers/finances" class ="btn btn-secondary">Pārskats pa gadiem</a>
 
 
         <header ><h2 style="text-align: right;" th:text="'Kopsumma: ' +${totalTurnover} + ' EUR'" > </h2></header>

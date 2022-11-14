@@ -162,7 +162,7 @@ public class ItemController {
 
 
         switch(item.getCategory()){
-            case SPEAKER,MIC,CONSOLE,STAND,STAGE, CABLE,MISC,VIDEO,TRANSPORT,WORK -> { return "items/items_edit";
+            case SPEAKER,BACKLINE,MIC,CONSOLE,STAND,STAGE, CABLE,MISC,VIDEO,TRANSPORT,WORK -> { return "items/items_edit";
             }
             case LIGHTS,MSPOTLIGHT,NMSPOTLIGHT -> { return "items/items_edit_light";
             }
@@ -184,6 +184,7 @@ public class ItemController {
         }
         var updatedItem = new Item(dto.getId(), dto.getName(), dto.getPrice(), pic, dto.isActive(), valueOfLabel(dto.getCategory()), dto.getLocation(), dto.getTotalCount());
         repo.update(updatedItem);
+        repo.updateCategory(dto.getCategory(), dto.getId());
         List<Location> locations = Arrays.asList(Location.values());
         model.addAttribute("title", "Rediģēt " + item.getName());
         model.addAttribute("locations", locations);

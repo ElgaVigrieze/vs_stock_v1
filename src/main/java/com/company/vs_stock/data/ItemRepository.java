@@ -1,5 +1,6 @@
 package com.company.vs_stock.data;
 
+import org.springframework.data.jpa.repository.Modifying;
 import com.company.vs_stock.data.Items.*;
 import com.company.vs_stock.data.enums.Category;
 import com.company.vs_stock.data.invoice.Invoice;
@@ -13,6 +14,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -83,20 +85,6 @@ public class ItemRepository {
         return new ArrayList<>();
     }
 
-    public Iterable<Item> getActiveItems() {
-        var session = factory.openSession();
-        try {
-            var sql = "FROM Item where active =: active";
-            var query = session.createQuery(sql);
-            query.setParameter("active", true);
-            return query.list();
-        } catch (HibernateException exception) {
-            System.err.println(exception);
-        } finally {
-            session.close();
-        }
-        return new ArrayList<>();
-    }
 
     public Iterable<Item> getItemsPerCategory(String category) {
         var session = factory.openSession();
@@ -113,6 +101,28 @@ public class ItemRepository {
             session.close();
         }
         return new ArrayList<>();
+    }
+
+
+    public void updateCategory(String category, long itemId) {
+        var session = factory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            var sql = "UPDATE Item SET category=:category where id=:id";
+            var query = session.createQuery(sql);
+            query.setParameter("category", category.toString().toLowerCase());
+            query.setParameter("id", itemId);
+            query.executeUpdate();
+            tx.commit();
+        } catch (HibernateException exception) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
     }
 
     public Iterable<Item> getActiveItemsPerCategory(String category) {
@@ -220,6 +230,8 @@ public class ItemRepository {
             session.close();
         }
     }
+
+
 
     public ArrayList<Item> sortPerCategory(ArrayList<Item> sortedItems, ArrayList<Item> items) {
         List<String> categories = getCategoriesPublic();

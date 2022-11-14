@@ -10,7 +10,7 @@
 <div th:replace="fragments/header :: myheader"></div>
     <div class="container">
     <h1 th:text="${title}"></h1>
-
+        <a th:href="${'/customers/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
         <header ><h2 style="text-align: right;" th:text="'Kopsumma: ' +${totalTurnover} + ' EUR'" > </h2></header>
         <table class="sortable; table table-hover">
             <tr>

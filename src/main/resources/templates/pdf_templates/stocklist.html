@@ -17,30 +17,32 @@
 </head>
 <body>
 <div th:replace="pdf_header :: pdfheader"></div>
-    <h1 th:text="'Cenu piedāvājums '+${title}"/>
+    <h2 style="font-weight:normal;text-align:center" th:text="'Cenu piedāvājums '+${title}"/>
 <table class="table table-hover" style="width:100%">
     <header ></header>
     <thead>
     <tr>
-        <th></th>
-        <th>Nosaukums</th>
-        <th>Cena</th>
-        <th>Daudzums</th>
-        <th>Summa</th>
+        <th style="width:10%;text-align:center"></th>
+        <th style="width:60%;text-align:center">Nosaukums</th>
+        <th style="width:10%;text-align:center">Cena</th>
+        <th style="width:10%;text-align:center">Skaits</th>
+        <th style="width:10%;text-align:center">Summa</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="item: ${items}">
-        <td> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
-        <td th:text="${item.getName()}" />
-        <td id= "price" th:text="${item.getPrice()}"/>
-        <td id= "quantity" th:text="${item.getQuantity()}"/>
-        <td th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${var}"/>
+        <td style="text-align:center"> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
+        <td style="padding-left:10px" th:text="${item.getName()}" />
+        <td style="text-align:center" id= "price" th:text="${item.getPrice()}"/>
+        <td style="text-align:center" id= "quantity" th:text="${item.getQuantity()}"/>
+        <td style="text-align:center" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${var}"/>
     </tr>
     </tbody>
 </table>
-<footer> <h2 th:text="'Kopā: ' + ${sum} + ' EUR'" > </h2>
-    <h2 th:text="'Kopā ar PVN: '+${sumVat} + ' EUR'" > </h2>
-</footer>
+<div style="font-weight:normal;text-align:right" th:text="'Kopā: ' + ${sum} + ' EUR'" > </div>
+    <div style="font-weight:normal;text-align:right" th:text="'Kopā ar PVN: '+${sumVat} + ' EUR'" > </div>
+<br></br>
+<p style="font-size:12px" th:text="'Piedāvājums derīgs līdz: ' + ${validDate}"></p>
+
 </body>
 </html>

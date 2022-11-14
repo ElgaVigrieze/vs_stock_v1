@@ -19,11 +19,8 @@ function ShowAndHide(x) {
 <div th:replace="fragments/header :: myheader"></div>
 <div class="container">
 <h1 th:text="${title}"></h1>
-    <a href="/new_item">
-        <button class ="button1" style="height: 50px; width: 400px;" >
-            <h4>Izveidot jaunu tehnikas vienību</h4>
-        </button>
-    </a>
+
+    <a href="/new_item" class ="btn btn-success">Jauna tehnikas vienība</a>
 
     <h4 onclick="ShowAndHide('speakers')" th:value="speaker">Tumbas</h4>
     <div id="speakers" style="display:none">
@@ -33,25 +30,20 @@ function ShowAndHide(x) {
                 <th>Nosaukums</th>
                 <th>Cena</th>
                 <th>Aktīvs</th>
-                <th>Pieejamais skaits</th>
+                <th>Pieejams</th>
                 <th>Atrašanās vieta</th>
                 <th></th>
             <tr/>
             </thead>
             <tbody>
             <tr th:each="item: ${speakers}">
-                <td th:text="${item.getName()}"/>
+                <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                 <td th:text="${item.getPrice()}"/>
                 <td>
-                    <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    <input type="checkbox" disabled="disabled" name="active" th:checked="${item.isActive()}">
                 </td>
                 <td th:text="${item.getTotalCount()}"/>
                 <td th:text="${item.getLocation()}"/>
-                <td>
-                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                        <img th:src="@{/img/pencil-square.svg}" width="30">
-                    </a>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -65,25 +57,20 @@ function ShowAndHide(x) {
                 <th>Nosaukums</th>
                 <th>Cena</th>
                 <th>Aktīvs</th>
-                <th>Pieejamais skaits</th>
+                <th>Pieejams</th>
                 <th>Atrašanās vieta</th>
                 <th></th>
             <tr/>
             </thead>
             <tbody>
             <tr th:each="item: ${backlines}">
-                <td th:text="${item.getName()}"/>
+                <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                 <td th:text="${item.getPrice()}"/>
                 <td>
-                    <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    <input type="checkbox" disabled="disabled" name="active" th:checked="${item.isActive()}">
                 </td>
                 <td th:text="${item.getTotalCount()}"/>
                 <td th:text="${item.getLocation()}"/>
-                <td>
-                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                        <img th:src="@{/img/pencil-square.svg}" width="30">
-                    </a>
-                </td>
             </tr>
             </tbody>
         </table>
@@ -97,25 +84,21 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${mics}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
+
                 </tr>
                 </tbody>
         </table>
@@ -129,25 +112,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${consoles}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -162,14 +140,14 @@ function ShowAndHide(x) {
                     <th>Jauda</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${mspotlights}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPower()}"/>
                     <td th:text="${item.getPrice()}"/>
                     <td>
@@ -177,11 +155,6 @@ function ShowAndHide(x) {
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -195,14 +168,14 @@ function ShowAndHide(x) {
                     <th>Jauda</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${nmspotlights}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPower()}"/>
                     <td th:text="${item.getPrice()}"/>
                     <td>
@@ -210,11 +183,6 @@ function ShowAndHide(x) {
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -229,14 +197,14 @@ function ShowAndHide(x) {
                     <th>Jauda</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${lights}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPower()}"/>
                     <td th:text="${item.getPrice()}"/>
                     <td>
@@ -244,11 +212,6 @@ function ShowAndHide(x) {
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -261,25 +224,21 @@ function ShowAndHide(x) {
                 <th>Nosaukums</th>
                 <th>Cena</th>
                 <th>Aktīvs</th>
-                <th>Pieejamais skaits</th>
+                <th>Pieejams</th>
                 <th>Atrašanās vieta</th>
                 <th></th>
             <tr/>
             </thead>
             <tbody>
             <tr th:each="item: ${video}">
-                <td th:text="${item.getName()}"/>
+                <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                 <td th:text="${item.getPrice()}"/>
                 <td>
                     <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                 </td>
                 <td th:text="${item.getTotalCount()}"/>
                 <td th:text="${item.getLocation()}"/>
-                <td>
-                    <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                        <img th:src="@{/img/pencil-square.svg}" width="30">
-                    </a>
-                </td>
+
             </tr>
             </tbody>
         </table>
@@ -292,25 +251,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${stands}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -323,25 +277,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${cables}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -355,14 +304,14 @@ function ShowAndHide(x) {
                     <th>Garums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${trusses}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getLength()}"/>
                     <td th:text="${item.getPrice()}"/>
                     <td>
@@ -370,11 +319,7 @@ function ShowAndHide(x) {
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
+
                 </tr>
                 </tbody>
             </table>
@@ -387,25 +332,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${stage}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -421,25 +361,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${transport}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -452,25 +387,21 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${work}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
                         <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
+
                 </tr>
                 </tbody>
             </table>
@@ -483,25 +414,20 @@ function ShowAndHide(x) {
                     <th>Nosaukums</th>
                     <th>Cena</th>
                     <th>Aktīvs</th>
-                    <th>Pieejamais skaits</th>
+                    <th>Pieejams</th>
                     <th>Atrašanās vieta</th>
                     <th></th>
                 <tr/>
                 </thead>
                 <tbody>
                 <tr th:each="item: ${misc}">
-                    <td th:text="${item.getName()}"/>
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
                     <td th:text="${item.getPrice()}"/>
                     <td>
-                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                        <input type="checkbox" disabled="disabled" ame="active" th:checked="${item.isActive()}">
                     </td>
                     <td th:text="${item.getTotalCount()}"/>
                     <td th:text="${item.getLocation()}"/>
-                    <td>
-                        <a class="navbar-brand" th:href="${'/items/'+item.getId()}">
-                            <img th:src="@{/img/pencil-square.svg}" width="30">
-                        </a>
-                    </td>
                 </tr>
                 </tbody>
             </table>
