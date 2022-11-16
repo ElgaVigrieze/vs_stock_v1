@@ -19,10 +19,18 @@
         </select>
         <button type="submit" class ="btn btn-success">Atlasīt</button>
         <a href="/new_invoice" class="btn btn-success"> Jauns rēķins</a>
+        <span th:if="${#httpServletRequest.requestURI != '/invoices'}" >
+        <a href="/invoices" class="btn btn-secondary">Visi rēķini</a>
+        </span>
+        <span th:if="${#httpServletRequest.requestURI != '/unpaid'}" >
         <a href="/unpaid" class ="btn btn-danger">Nesamaksātie rēķini</a>
+        </span>
+        <span th:if="${#httpServletRequest.requestURI != '/delivery'}" >
         <a href="/delivery" class ="btn btn-secondary">Pavadzīmes</a>
+             </span>
     </form>
         <br>
+    <div th:text="${#httpServletRequest.requestURI}"></div>
         <form method="post" th:action="${'/invoices/paid'}" name="invoiceSaveDto">
             <button type="submit" class="btn btn-success" style="">Saglabāt izmaiņas</button>
 

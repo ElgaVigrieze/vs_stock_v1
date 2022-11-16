@@ -241,35 +241,40 @@ public class InvoiceController {
         model.addAttribute("customers", customers);
         model.addAttribute("customerId", customerId);
         model.addAttribute("invoices", invoices);
-        return "invoices/invoices_filtered";
+        return "invoices/invoices";
     }
-
-//    @GetMapping("/invoices/customers/{customerId}")
-//    public String invoicesPerCustomer1(@PathVariable long customerId, Model model) {
-//        var invoices = repo.getAllInvoicesPerCustomer(customerId);
-////        var totalTurnover = repo.getTotalTurnoverPer();
-//        var repo1 = new CustomerRepository();
-//        var customers = repo1.getCustomers();
-//        model.addAttribute("customers", customers);
-//        model.addAttribute("customerId", customerId);
-//        model.addAttribute("invoices", invoices);
-////        model.addAttribute("invoice", invoice);
-////        model.addAttribute("totalTurnover", totalTurnover);
-//        return "invoices/invoices_filtered";
-//    }
 
     @GetMapping("/unpaid")
     public String invoicesUnpaid(Model model) {
         var invoices = repo.getUnpaidInvoices();
         model.addAttribute("invoices", invoices);
-        return "invoices/unpaid";
+        var invoice = new Invoice();
+        var totalTurnover = repo.getTotalTurnover();
+        var repo1 = new CustomerRepository();
+        var customers = repo1.getCustomers();
+        model.addAttribute("customers", customers);
+        model.addAttribute("invoices", invoices);
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("title", "Neapmaksātie rēķini");
+        model.addAttribute("totalTurnover", totalTurnover);
+        return "invoices/invoices";
     }
 
     @GetMapping("/delivery")
     public String invoicesDelivery(Model model) {
         var invoices = repo.getDeliveryInvoices();
+        var invoice = new Invoice();
+        var totalTurnover = repo.getTotalTurnover();
+        var repo1 = new CustomerRepository();
+        var customers = repo1.getCustomers();
+        model.addAttribute("customers", customers);
         model.addAttribute("invoices", invoices);
-        return "invoices/delivery";
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("title", "Pavadzīmes");
+        model.addAttribute("totalTurnover", totalTurnover);
+
+        model.addAttribute("invoices", invoices);
+        return "invoices/invoices";
     }
 
     @GetMapping("/invoices/{invoiceId}")
