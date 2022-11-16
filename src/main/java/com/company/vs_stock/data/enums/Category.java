@@ -7,6 +7,7 @@ public enum Category {
     BACKLINE(CatValues.BACKLINE),
     MIC(CatValues.MIC),
     CONSOLE(CatValues.CONSOLE),
+    AUDIO(CatValues.AUDIO),
     MSPOTLIGHT(CatValues.MSPOTLIGHT),
     NMSPOTLIGHT(CatValues.NMSPOTLIGHT),
     LIGHTS(CatValues.LIGHTS),
@@ -58,6 +59,7 @@ public enum Category {
         public static final String BACKLINE="backline";
         public static final String MIC="mikrofons";
         public static final String CONSOLE="pults";
+        public static final String AUDIO="audio piederumi";
         public static final String MSPOTLIGHT="kustīgais prožektors";
         public static final String NMSPOTLIGHT="fiksētais prožektors";
         public static final String LIGHTS = "gaismu tehnika";

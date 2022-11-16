@@ -9,12 +9,9 @@
 <div th:replace="fragments/header :: myheader"></div>
 <div class="container">
 <h1 th:text="${title}"></h1>
-
-
     <a href="/new_invoice" class="btn btn-success"> Jauns rēķins</a>
     <a href="/invoices" class ="btn btn-secondary">Visi rēķini</a>
-    <a href="/delivery" class ="btn btn-secondary">Pavadzīmes</a>
-        <br>
+
         <br>
         <form method="post" th:action="${'/invoices/paid'}" name="invoiceSaveDto">
             <button type="submit" class="btn btn-success" style="">Saglabāt izmaiņas</button>

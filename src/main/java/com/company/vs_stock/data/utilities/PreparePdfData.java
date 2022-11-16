@@ -1,7 +1,7 @@
 package com.company.vs_stock.data.utilities;
 
 import com.company.vs_stock.data.*;
-import com.company.vs_stock.data.Items.Item;
+import com.company.vs_stock.data.Items.*;
 import com.company.vs_stock.data.invoice.Invoice;
 import com.company.vs_stock.data.project.Project;
 
@@ -36,14 +36,31 @@ public class PreparePdfData {
         }
         var sortedItems = new ArrayList<Item>();
         sortedItems = repo.sortPerCategory(sortedItems, unsortedItems);
+        var soundItems = repo.getItemsPerClass(Sound.class, sortedItems);
+        var lightItems = repo.getItemsPerClass(Lights.class, sortedItems);
+        var stageItems = repo.getItemsPerClass(Stage.class,sortedItems);
+        var otherItems = repo.getItemsPerClass(Other.class,sortedItems);
         var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
         var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
         var title = project.getTitle();
+        var soundSum = String.format("%.2f",repo1.getSumPerClass(soundItems));
+        var lightSum = String.format("%.2f",repo1.getSumPerClass(lightItems));
+        var stageSum = String.format("%.2f",repo1.getSumPerClass(stageItems));
+        var otherSum = String.format("%.2f",repo1.getSumPerClass(otherItems));
         var validDate = project.getValidDate();
         Map<String, Object> data = new HashMap<>();
         data.put("title", title);
         data.put("items", sortedItems);
         data.put("sum", sum);
+//        data.put("soundSum", soundSum);
+        data.put("soundItems", soundItems);
+        data.put("lightItems", lightItems);
+        data.put("stageItems", stageItems);
+        data.put("otherItems", otherItems);
+        data.put("soundSum", soundSum);
+        data.put("lightSum", lightSum);
+        data.put("stageSum", stageSum);
+        data.put("otherSum", otherSum);
         data.put("sumVat", sumVat);
         data.put("logo",LOGO);
         data.put("validDate", validDate);

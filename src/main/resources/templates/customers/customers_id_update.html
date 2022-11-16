@@ -51,10 +51,18 @@
                     <input name="swift" th:value="${customer.getSwift()}"/>
                 </td>
             </tr>
+
+
             <tr>
                 <th>Konta numurs: </th>
                 <td>
                     <input name="accountNumber" th:value="${customer.getAccountNumber()}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>Kontaktpersona: </th>
+                <td>
+                    <input type ="text" name="contact" id="contact" th:value="${customer.getContact()}">
                 </td>
             </tr>
             <tr>
@@ -66,7 +74,7 @@
             <tr>
                 <th>Telefona numurs: </th>
                 <td>
-                    <input name="EMail" th:value="${customer.getPhoneNumber()}"/>
+                    <input name="phoneNumber" th:value="${customer.getPhoneNumber()}"/>
                 </td>
             </tr>
         </table>

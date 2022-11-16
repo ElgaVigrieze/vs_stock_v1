@@ -12,7 +12,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value= Category.CatValues.MIC)
 
 
-public class MicItem extends Item {
+public class MicItem extends Sound {
 
     public MicItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
         super(id, name, price, pic, isActive, location, totalCount);

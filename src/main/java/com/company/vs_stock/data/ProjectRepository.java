@@ -135,6 +135,7 @@ public Object getProject(Long id) {
     }
 
 
+
     public void updateStockListItemDone(long itemId, long projectId, boolean done) {
         var session = factory.openSession();
         Transaction tx = null;
@@ -153,6 +154,17 @@ public Object getProject(Long id) {
             session.close();
         }
     }
+
+    public Float getSumPerClass(ArrayList<Object> items){
+        var soundSum = 0F;
+        for (var i:items) {
+            var item = (Item)i;
+            soundSum += (item.getQuantity()*item.getPrice());
+        }
+        return soundSum;
+    }
+
+
     public void updateStockListItemQuantityOrPrice(long itemId, long projectId,Integer quantity, Float price) {
         var session = factory.openSession();
         Transaction tx = null;

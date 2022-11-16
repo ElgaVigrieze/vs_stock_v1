@@ -91,6 +91,22 @@ public class InvoiceRepository {
         return new ArrayList<>();
     }
 
+    public Iterable<Invoice> getDeliveryInvoices() {
+        var session = factory.openSession();
+
+        try {
+            var sql = "FROM Invoice where type=:type ORDER BY id DESC";
+            var query = session.createQuery(sql);
+            query.setParameter("type", DocType.DELIVERY_INVOICE);
+            return query.list();
+        } catch (HibernateException exception) {
+            System.err.println(exception);
+        } finally {
+            session.close();
+        }
+        return new ArrayList<>();
+    }
+
     public Iterable<Invoice> getBaseInvoices() {
         var session = factory.openSession();
         try {
@@ -229,7 +245,7 @@ public class InvoiceRepository {
     public Long addDeliveryInvoice(Object invoice) {
         var baseInvoice = (Invoice)invoice;
         var deliveryInvoice = new Invoice(0L, DocType.DELIVERY_INVOICE, baseInvoice.getNumber().replace("VS","PZ"),LocalDate.now(), LocalDate.now().plusWeeks(1), baseInvoice.getCustomer(),
-        baseInvoice.getTotal(), baseInvoice.getComment(), baseInvoice.getLines(), baseInvoice.getDeliveryAddress());
+        baseInvoice.getTotal(), baseInvoice.getComment(), baseInvoice.getLines(), baseInvoice.getDeliveryAddress(), false);
         var id = addInvoice(deliveryInvoice);
         addDeliveryInvoiceLine(baseInvoice.getId(),id);
         return id;

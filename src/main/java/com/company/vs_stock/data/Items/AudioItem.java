@@ -7,23 +7,26 @@ import lombok.Data;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-
 @Data
 @Entity
-@DiscriminatorValue(value= Category.CatValues.SPEAKER)
+@DiscriminatorValue(value= Category.CatValues.AUDIO)
 
 
-public class SpeakerItem extends Sound {
+public class AudioItem extends Sound {
 
-    public SpeakerItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
+    public AudioItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
         super(id, name, price, pic, isActive, location, totalCount);
     }
 
-    public SpeakerItem(long id, int quantity) {
+    public AudioItem(long id, String name, Float price, boolean isActive, Location location, int totalCount) {
+        super(id, name, price, isActive, location, totalCount);
+    }
+
+    public AudioItem(long id, int quantity) {
         super(id,  quantity);
     }
 
-    public SpeakerItem() {
+    public AudioItem() {
         super();
     }
 

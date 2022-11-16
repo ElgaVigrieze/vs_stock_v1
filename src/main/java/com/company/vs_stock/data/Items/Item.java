@@ -118,6 +118,7 @@ public class Item {
         this.done = done;
     }
 
+
     public String getPicEncoded() throws IOException {
         if(Objects.equals(this.pic, defaultPic)){
             return defaultPic;

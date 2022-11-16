@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static com.company.vs_stock.data.utilities.DateConverter.convertStringToDate;
-import static com.company.vs_stock.data.utilities.DateConverter.formatDate;
 import static com.company.vs_stock.data.utilities.PreparePdfData.setPdfDataInvoice;
 
 @Controller
@@ -45,8 +44,14 @@ public class InvoiceController {
         }
         types.remove(DocType.DELIVERY_INVOICE.getValue());
         Iterable<Customer> customers = repo2.getCustomers();
-        var lastInvoice = (Invoice)repo.getLastInvoice();
-        var invoiceId = lastInvoice.getId()+1;
+        var invoice = new Invoice();
+        invoice.setNumber(invoice.generateNumber());
+        invoice.setIsPaid(false);
+        var invoiceId = repo.addInvoice(invoice);
+        var invoice1=(Invoice)repo.getInvoice(invoiceId);
+        System.out.println("invoice just saved " + invoice1);
+//        var lastInvoice = (Invoice)repo.getLastInvoice();
+//        var invoiceId = lastInvoice.getId()+1;
         model.addAttribute("title", "Izveidot jaunu rēķinu");
         model.addAttribute("types", types);
         model.addAttribute("invoiceId", invoiceId);
@@ -55,8 +60,11 @@ public class InvoiceController {
     }
 
     @PostMapping("/new_invoice/{invoiceId}")
-    public ModelAndView addInvoice1(InvoiceSaveDto dto) {
-        var invoiceId = repo.addInvoice(dto);
+    public ModelAndView addInvoice1(InvoiceSaveDto dto, @PathVariable long invoiceId) {
+        var invoiceSaved = (Invoice)repo.getInvoice(invoiceId);
+        var invoice = new Invoice(invoiceId,invoiceSaved.getNumber(),DocType.getType(dto.getType()),convertStringToDate(dto.getDate()),convertStringToDate(dto.getDueDate()),(Customer)repo2.getCustomer(dto.getCustomerId()),dto.getComment(), false);
+        System.out.println("invoice updated " + invoice);
+        repo.updateInvoice(invoice);
         return new ModelAndView ("redirect:/invoices/{invoiceId}/add");
     }
 
@@ -185,7 +193,7 @@ public class InvoiceController {
         var invoice = (Invoice)repo.getInvoice(invoiceId);
         var customer = (Customer)repo2.getCustomer(dto.getCustomerId());
         var lines = invoice.getLines();
-        var invoiceUpdated = new Invoice(invoice.getId(),invoice.getType(),invoice.getNumber(),convertStringToDate(dto.getDate()),convertStringToDate(dto.getDueDate()),customer, invoice.getTotal(),dto.getComment(), lines);
+        var invoiceUpdated = new Invoice(invoice.getId(),invoice.getType(),invoice.getNumber(),convertStringToDate(dto.getDate()),convertStringToDate(dto.getDueDate()),customer, invoice.getTotal(),dto.getComment(), lines, invoice.getDeliveryAddress(), invoice.getIsPaid());
         repo.updateInvoice(invoiceUpdated);
         model.addAttribute("invoice", invoice);
         return new ModelAndView("redirect:/invoices/{invoiceId}");
@@ -228,14 +236,11 @@ public class InvoiceController {
     public String invoicesPerCustomer(Model model, CustomerDto dto) {
         var customerId = dto.getCustomerId();
         var invoices = repo.getAllInvoicesPerCustomer(customerId);
-//        var totalTurnover = repo.getTotalTurnoverPer();
         var repo1 = new CustomerRepository();
         var customers = repo1.getCustomers();
         model.addAttribute("customers", customers);
         model.addAttribute("customerId", customerId);
         model.addAttribute("invoices", invoices);
-//        model.addAttribute("invoice", invoice);
-//        model.addAttribute("totalTurnover", totalTurnover);
         return "invoices/invoices_filtered";
     }
 
@@ -258,6 +263,13 @@ public class InvoiceController {
         var invoices = repo.getUnpaidInvoices();
         model.addAttribute("invoices", invoices);
         return "invoices/unpaid";
+    }
+
+    @GetMapping("/delivery")
+    public String invoicesDelivery(Model model) {
+        var invoices = repo.getDeliveryInvoices();
+        model.addAttribute("invoices", invoices);
+        return "invoices/delivery";
     }
 
     @GetMapping("/invoices/{invoiceId}")
@@ -314,6 +326,10 @@ public class InvoiceController {
         var line = (InvoiceLine)repo.getLine(lineId);
         var updatedLine = new InvoiceLine(lineId,line.getInvoice(),dto.getDescription(),dto.getPrice(),dto.getQuantity(),dto.getPrice()*dto.getQuantity(),(Project)repo1.getProject(dto.getProjectId()));
         repo.updateInvoiceLine(updatedLine);
+        var invoice = (Invoice)repo.getInvoice(invoiceId);
+        invoice.setTotal(invoice.fetchTotal(invoice.getLines()));
+        var invoiceUpdated = new Invoice(invoice.getId(),invoice.getType(),invoice.getNumber(),invoice.getDate(),invoice.getDueDate(),invoice.getCustomer(), invoice.getTotal(),invoice.getComment(), invoice.getLines(), invoice.getDeliveryAddress(),invoice.getIsPaid());
+        repo.updateInvoice(invoiceUpdated);
         return new ModelAndView ("redirect:/invoices/{invoiceId}/lines");
     }
 

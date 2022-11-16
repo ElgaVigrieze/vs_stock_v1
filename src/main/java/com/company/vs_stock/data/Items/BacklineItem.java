@@ -7,13 +7,12 @@ import lombok.Data;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-
 @Data
 @Entity
 @DiscriminatorValue(value= Category.CatValues.BACKLINE)
 
 
-public class BacklineItem extends Item {
+public class BacklineItem extends Sound {
 
     public BacklineItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
         super(id, name, price, pic, isActive, location, totalCount);

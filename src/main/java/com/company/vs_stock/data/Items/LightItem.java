@@ -12,7 +12,7 @@ import javax.persistence.*;
 @DiscriminatorValue(value= Category.CatValues.LIGHTS)
 @NoArgsConstructor
 
-public class LightItem extends Item {
+public class LightItem extends Lights {
 //@Column(name="power")
     private Float power;
 

@@ -14,12 +14,13 @@
     <style type='text/css'>
     * { font-family: Verdana; }
        </style>
+
 </head>
 <body>
+
 <div th:replace="pdf_header :: pdfheader"></div>
     <h2 style="font-weight:normal;text-align:center" th:text="'Cenu piedāvājums '+${title}"/>
 <table class="table table-hover" style="width:100%">
-    <header ></header>
     <thead>
     <tr>
         <th style="width:10%;text-align:center"></th>
@@ -30,17 +31,75 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="item: ${items}">
+    <span th:if="${soundSum != '0.00'}" >
+    <tr>
+        <td colspan="5" style="text-align:left">Skaņa</td>
+    </tr>
+    <tr th:each="item: ${soundItems}">
         <td style="text-align:center"> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
         <td style="padding-left:10px" th:text="${item.getName()}" />
         <td style="text-align:center" id= "price" th:text="${item.getPrice()}"/>
         <td style="text-align:center" id= "quantity" th:text="${item.getQuantity()}"/>
-        <td style="text-align:center" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${var}"/>
+        <td style="text-align:center" id="rowSum" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${#numbers.formatDecimal(var,1,'POINT',2,'POINT')}"/>
     </tr>
+
+    <tr>
+        <td colspan="4" style="text-align:right;padding-right:10px">Skaņa kopā:</td>
+        <td th:text="${soundSum}"></td>
+    </tr>
+    </span>
+    <span th:if="${lightSum != '0.00'}" >
+    <tr>
+        <td colspan="5" style="text-align:left">Gaisma</td>
+    </tr>
+    <tr th:each="item: ${lightItems}">
+        <td style="text-align:center"> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
+        <td style="padding-left:10px" th:text="${item.getName()}"/>
+        <td style="text-align:center" id= "price" th:text="${item.getPrice()}"/>
+        <td style="text-align:center" id= "quantity" th:text="${item.getQuantity()}"/>
+         <td style="text-align:center" id="rowSum" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${#numbers.formatDecimal(var,1,'POINT',2,'POINT')}"/>
+    </tr>
+    <tr >
+        <td colspan="4" style="text-align:right;padding-right:10px">Gaisma kopā:</td>
+        <td th:text="${lightSum}"></td>
+    </tr>
+        </span>
+    <span th:if="${stageSum != '0.00'}" >
+    <tr >
+        <td colspan="5" style="text-align:left">Skatuve</td>
+    </tr>
+    <tr th:each="item: ${stageItems}">
+        <td style="text-align:center"> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
+        <td style="padding-left:10px" th:text="${item.getName()}" />
+        <td style="text-align:center" id= "price" th:text="${item.getPrice()}"/>
+        <td style="text-align:center" id= "quantity" th:text="${item.getQuantity()}"/>
+        <td style="text-align:center" id="rowSum" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${#numbers.formatDecimal(var,1,'POINT',2,'POINT')}"/>
+    </tr>
+    <tr >
+        <td colspan="4" style="text-align:right;padding-right:10px">Skatuve kopā:</td>
+        <td th:text="${stageSum}" ></td>
+    </tr>
+    </span>
+    <span th:if="${otherSum != '0.00'}" >
+    <tr>
+        <td colspan="5" style="text-align:left">Citi</td>
+    </tr>
+    <tr th:each="item: ${otherItems}">
+        <td style="text-align:center"> <img th:src="${item.getPicEncoded()}" width="50px" height="50px"/></td>
+        <td style="padding-left:10px" th:text="${item.getName()}" />
+        <td style="text-align:center" id= "price" th:text="${item.getPrice()}"/>
+        <td style="text-align:center" id= "quantity" th:text="${item.getQuantity()}"/>
+        <td style="text-align:center" id="rowSum" th:with="var=${item.getQuantity()*item.getPrice()}" th:text="${#numbers.formatDecimal(var,1,'POINT',2,'POINT')}"/>
+    </tr>
+    <tr>
+        <td colspan="4" style="text-align:right;padding-right:10px">Citi kopā:</td>
+        <td th:text="${otherSum}"></td>
+    </tr>
+    </span>
     </tbody>
 </table>
-<div style="font-weight:normal;text-align:right" th:text="'Kopā: ' + ${sum} + ' EUR'" > </div>
-    <div style="font-weight:normal;text-align:right" th:text="'Kopā ar PVN: '+${sumVat} + ' EUR'" > </div>
+<div style="font-weight:normal;text-align:right" th:text="'Kopā: ' + ${sum} + ' EUR'"> </div>
+    <div style="font-weight:normal;text-align:right" th:text="'Kopā ar PVN: '+${sumVat} + ' EUR'"> </div>
 <br></br>
 <p style="font-size:12px" th:text="'Piedāvājums derīgs līdz: ' + ${validDate}"></p>
 

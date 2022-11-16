@@ -1,12 +1,11 @@
 package com.company.vs_stock;
 
 
+import com.company.vs_stock.data.Items.*;
 import com.company.vs_stock.data.enums.Category;
 import com.company.vs_stock.data.ItemRepository;
-import com.company.vs_stock.data.Items.Item;
 import com.company.vs_stock.data.Message;
 import com.company.vs_stock.data.ProjectRepository;
-import com.company.vs_stock.data.enums.Category;
 import com.company.vs_stock.data.project.Project;
 import com.company.vs_stock.data.utilities.PdfFileExporter;
 import com.company.vs_stock.dto.ItemSaveDto2;
@@ -25,7 +24,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.company.vs_stock.data.utilities.DateConverter.convertStringToDate;
-import static com.company.vs_stock.data.utilities.DateConverter.formatDate;
 import static com.company.vs_stock.data.utilities.ImageDisplay.displayImageFromPath;
 import static com.company.vs_stock.data.utilities.ImageDisplay.uploadPathProject;
 import static com.company.vs_stock.data.utilities.PreparePdfData.setPdfDataStocklist;
@@ -76,12 +74,21 @@ public class ProjectController {
     @GetMapping("/projects/{projectId}")
     public String viewProject(@PathVariable long projectId,Model model) {
         var project = (Project)repo1.getProject(projectId);
+//        var sortedItems = repo1.getStockListItems(project);
         var sortedItems = repo1.getStockListItemsSorted(project);
+        var soundItems = repo.getItemsPerClass(Sound.class, sortedItems);
+        var lightItems = repo.getItemsPerClass(Lights.class, sortedItems);
+        var stageItems = repo.getItemsPerClass(Stage.class,sortedItems);
+        var otherItems = repo.getItemsPerClass(Other.class,sortedItems);
         var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
         var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
         var title = project.getTitle();
         model.addAttribute("title", title);
         model.addAttribute("items", sortedItems);
+        model.addAttribute("soundItems", soundItems);
+        model.addAttribute("lightItems", lightItems);
+        model.addAttribute("stageItems", stageItems);
+        model.addAttribute("otherItems", otherItems);
         model.addAttribute("project", project);
         model.addAttribute("sum", sum);
         model.addAttribute("sumVat", sumVat);
@@ -191,6 +198,38 @@ public class ProjectController {
         model.addAttribute("sum", String.format("%.2f",sum));
         model.addAttribute("sumVat", String.format("%.2f",sum*1.21));
         return "projects/projects_stock_list_edit";
+    }
+
+    @GetMapping("projects/{projectId}/stocklist")
+    public ModelAndView stocklistTemplate1(@PathVariable long projectId,Model model){
+        var project = (Project)repo1.getProject(projectId);
+//        var sortedItems = repo1.getStockListItems(project);
+        var sortedItems = repo1.getStockListItemsSorted(project);
+        var soundItems = repo.getItemsPerClass(Sound.class, sortedItems);
+        var lightItems = repo.getItemsPerClass(Lights.class, sortedItems);
+        var stageItems = repo.getItemsPerClass(Stage.class,sortedItems);
+        var otherItems = repo.getItemsPerClass(Other.class,sortedItems);
+        var soundSum = String.format("%.2f",repo1.getSumPerClass(soundItems));
+        var lightSum = String.format("%.2f",repo1.getSumPerClass(lightItems));
+        var stageSum = String.format("%.2f",repo1.getSumPerClass(stageItems));
+        var otherSum = String.format("%.2f",repo1.getSumPerClass(otherItems));
+        var sum = String.format("%.2f",repo.getProjectSum(sortedItems));
+        var sumVat  = String.format("%.2f",repo.getProjectSum(sortedItems)*1.21);
+        var title = project.getTitle();
+        model.addAttribute("title", title);
+        model.addAttribute("items", sortedItems);
+        model.addAttribute("soundItems", soundItems);
+        model.addAttribute("lightItems", lightItems);
+        model.addAttribute("stageItems", stageItems);
+        model.addAttribute("otherItems", otherItems);
+        model.addAttribute("soundSum", soundSum);
+        model.addAttribute("lightSum", lightSum);
+        model.addAttribute("stageSum", stageSum);
+        model.addAttribute("otherSum", otherSum);
+        model.addAttribute("project", project);
+        model.addAttribute("sum", sum);
+        model.addAttribute("sumVat", sumVat);
+        return new ModelAndView("pdf_templates/stocklist");
     }
 
     @GetMapping("/stocklist/{projectId}")

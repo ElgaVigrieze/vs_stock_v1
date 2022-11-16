@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @DiscriminatorValue(value= Category.CatValues.CONSOLE)
-public class ConsoleItem extends Item {
+public class ConsoleItem extends Sound {
     public ConsoleItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
         super(id, name, price, pic, isActive, location, totalCount);
     }

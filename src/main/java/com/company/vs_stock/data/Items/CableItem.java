@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @DiscriminatorValue(value= Category.CatValues.CABLE)
-public class CableItem extends Item {
+public class CableItem extends Other {
     public CableItem() {
     }
 

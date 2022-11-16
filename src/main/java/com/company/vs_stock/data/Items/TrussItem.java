@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @DiscriminatorValue(value= Category.CatValues.TRUSS)
-public class TrussItem extends Item {
+public class TrussItem extends Stage {
 //    @Column(name="length")
     private Float length;
 

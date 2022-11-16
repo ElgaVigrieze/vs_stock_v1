@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue(value= Category.CatValues.MSPOTLIGHT)
 @NoArgsConstructor
 
-public class MSpotlight extends Item {
+public class MSpotlight extends Lights {
 //@Column(name="power")
     private Float power;
 

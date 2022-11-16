@@ -9,19 +9,26 @@ import javax.persistence.Entity;
 
 @Data
 @Entity
-@DiscriminatorValue(value= Category.CatValues.WORK)
-public class WorkItem extends Other {
+//@DiscriminatorValue(value= Category.CatValues.STAGE)
+public class Sound extends Item {
 
-    public WorkItem(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
+    public Sound(long id, String name, Float price, String pic, boolean isActive, Location location, int totalCount) {
         super(id, name, price, pic, isActive, location, totalCount);
     }
 
-    public WorkItem(long id, int quantity) {
+    public Sound(long id, String name, Float price,  boolean isActive, Location location, int totalCount) {
+        super(id, name, price,  isActive, location, totalCount);
+    }
+
+
+    public Sound(long id, int quantity) {
         super(id, quantity);
     }
 
-    public WorkItem() {
+    public Sound() {
     }
+
+
 
     @Override
     public String getCategory() {

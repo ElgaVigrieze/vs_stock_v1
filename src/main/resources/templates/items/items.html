@@ -21,7 +21,8 @@ function ShowAndHide(x) {
 <h1 th:text="${title}"></h1>
 
     <a href="/new_item" class ="btn btn-success">Jauna tehnikas vienība</a>
-
+    <h3 onclick="ShowAndHide('sound')" STYLE="text-decoration:underline">Skaņa</h3>
+    <div id="sound" style="display:none">
     <h4 onclick="ShowAndHide('speakers')" th:value="speaker">Tumbas</h4>
     <div id="speakers" style="display:none">
         <table class="table table-hover">
@@ -48,6 +49,7 @@ function ShowAndHide(x) {
             </tbody>
         </table>
     </div>
+
 
     <h4 onclick="ShowAndHide('backline')" th:value="backline">Backline</h4>
     <div id="backline" style="display:none">
@@ -130,7 +132,9 @@ function ShowAndHide(x) {
                 </tbody>
             </table>
             </div>
-
+    </div>
+    <h3 onclick="ShowAndHide('light')" STYLE="text-decoration:underline">Gaismas</h3>
+    <div id="light" style="display:none">
     <h4 onclick="ShowAndHide('mspotlight')" th:value="mspotlight">Kustīgie prožektori</h4>
     <div id="mspotlight" style="display:none">
             <table class="table table-hover">
@@ -243,6 +247,68 @@ function ShowAndHide(x) {
             </tbody>
         </table>
         </div>
+</div>
+    <h3 onclick="ShowAndHide('stages')" STYLE="text-decoration:underline">Skatuve</h3>
+    <div id="stages" style="display:none">
+        <h4 onclick="ShowAndHide('truss')" th:value="truss">Fermas</h4>
+        <div id="truss" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Garums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejams</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${trusses}">
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
+                    <td th:text="${item.getLength()}"/>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4 onclick="ShowAndHide('stage')" th:value="stage">Skatuves tehnika</h4>
+        <div id="stage" style="display:none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Nosaukums</th>
+                    <th>Cena</th>
+                    <th>Aktīvs</th>
+                    <th>Pieejams</th>
+                    <th>Atrašanās vieta</th>
+                    <th></th>
+                <tr/>
+                </thead>
+                <tbody>
+                <tr th:each="item: ${stage}">
+                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
+                    <td th:text="${item.getPrice()}"/>
+                    <td>
+                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
+                    </td>
+                    <td th:text="${item.getTotalCount()}"/>
+                    <td th:text="${item.getLocation()}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 onclick="ShowAndHide('other')" STYLE="text-decoration:underline">Citi</h3>
+    <div id="other" style="display:none">
         <h4 onclick="ShowAndHide('stand')" th:value="stand">Statīvi</h4>
         <div id="stand" style="display:none">
             <table class="table table-hover">
@@ -295,61 +361,7 @@ function ShowAndHide(x) {
                 </tbody>
             </table>
             </div>
-        <h4 onclick="ShowAndHide('truss')" th:value="truss">Fermas</h4>
-        <div id="truss" style="display:none">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Nosaukums</th>
-                    <th>Garums</th>
-                    <th>Cena</th>
-                    <th>Aktīvs</th>
-                    <th>Pieejams</th>
-                    <th>Atrašanās vieta</th>
-                    <th></th>
-                <tr/>
-                </thead>
-                <tbody>
-                <tr th:each="item: ${trusses}">
-                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
-                    <td th:text="${item.getLength()}"/>
-                    <td th:text="${item.getPrice()}"/>
-                    <td>
-                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
-                    </td>
-                    <td th:text="${item.getTotalCount()}"/>
-                    <td th:text="${item.getLocation()}"/>
 
-                </tr>
-                </tbody>
-            </table>
-            </div>
-        <h4 onclick="ShowAndHide('stage')" th:value="stage">Skatuves tehnika</h4>
-        <div id="stage" style="display:none">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Nosaukums</th>
-                    <th>Cena</th>
-                    <th>Aktīvs</th>
-                    <th>Pieejams</th>
-                    <th>Atrašanās vieta</th>
-                    <th></th>
-                <tr/>
-                </thead>
-                <tbody>
-                <tr th:each="item: ${stage}">
-                    <td><a th:href="${'/items/'+item.getId()}" th:text="${item.getName()}"> </a></td>
-                    <td th:text="${item.getPrice()}"/>
-                    <td>
-                        <input type="checkbox" disabled="disabled" id="done" name="active" th:checked="${item.isActive()}">
-                    </td>
-                    <td th:text="${item.getTotalCount()}"/>
-                    <td th:text="${item.getLocation()}"/>
-                </tr>
-                </tbody>
-            </table>
-            </div>
 
 
 
@@ -432,6 +444,7 @@ function ShowAndHide(x) {
                 </tbody>
             </table>
             </div>
+    </div>
 
 </div>
 </body>

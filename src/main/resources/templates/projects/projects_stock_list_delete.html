@@ -24,7 +24,6 @@
         <form method="post" th:action="${'/new_project/'+projectId}" name="itemSaveDto">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Nosaukums</th>
             <th>Kategorija</th>
             <th>Daudzums</th>
@@ -34,9 +33,6 @@
         </thead>
         <tbody>
         <tr th:each="item: ${items}">
-            <td>
-                <input type="number" readonly th:value="${item.getId()}" name="id"/>
-            </td>
             <td th:text="${item.getName()}"/>
             <td th:text="${item.getCategory()}"/>
             <td>

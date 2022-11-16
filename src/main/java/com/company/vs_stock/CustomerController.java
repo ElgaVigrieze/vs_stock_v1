@@ -114,6 +114,7 @@ public class CustomerController {
         if(dto.getAccountNumber()!=null){
             customer.setAccountNumber(dto.getAccountNumber());
         }
+
         if(dto.getEMail()!=null){
             customer.setEMail(dto.getEMail());
         }
@@ -122,6 +123,9 @@ public class CustomerController {
         }
         if(dto.getSwift()!=null){
             customer.setSwift(dto.getSwift());
+        }
+        if(dto.getContact()!=null){
+            customer.setContact(dto.getContact());
         }
         repo.updateCustomer(customer);
         model.addAttribute("customerId", customerId);
@@ -137,7 +141,7 @@ public class CustomerController {
 
     @PostMapping("/new_customer")
     public ModelAndView saveProject(@ModelAttribute CustomerSaveDto dto) {
-        repo.addCustomer(new Customer(0,dto.getName(),dto.getVatNumber(), dto.getBillingAddress(), dto.getBank(),dto.getSwift(),dto.getAccountNumber(),dto.getEMail(),dto.getPhoneNumber()));
+        repo.addCustomer(new Customer(0,dto.getName(),dto.getVatNumber(), dto.getBillingAddress(), dto.getBank(),dto.getSwift(),dto.getAccountNumber(), dto.getEMail(),dto.getPhoneNumber(),dto.getContact()));
         return new ModelAndView("redirect:/customers");
     }
 

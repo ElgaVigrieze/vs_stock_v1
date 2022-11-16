@@ -4,6 +4,19 @@
       layout:decorator="layouts/default">
 <head>
     <div th:replace="fragments/headerstyle :: mystyle"></div>
+    <script>
+    function calculatePriceVAT(){
+        var vat = document.getElementById('VAT'),
+        noVat = document.getElementById('noVAT');
+        vat.value = Math.round((noVat.value*1.21)* 100) / 100;
+        }
+
+    function calculatePriceNoVAT(){
+        var vat = document.getElementById('VAT'),
+        noVat = document.getElementById('noVAT');
+        noVat.value = Math.round((vat.value/1.21)* 100) / 100;
+        }
+    </script>
 </head>
 <body>
 <div th:replace="fragments/header :: myheader"></div>
@@ -25,8 +38,10 @@
             <label for="quantity">Daudzums:</label><br/>
             <input type="number" id="quantity" name="quantity" th:value="1"><br>
             </span>
-            <label for="price">Cena:</label><br/>
-            <input type="number"  step="0.01" id="price" name="price"><br>
+            <label for="noVAT">Cena:</label><br/>
+            <input onchange="calculatePriceVAT()" type="number"  step="0.01" id="noVAT" name="price"><br>
+            <label for="VAT">Cena ar PVN:</label><br/>
+            <input onchange="calculatePriceNoVAT()" type="number"  step="0.01" id="VAT" name="price"><br>
             <br>
             <button type="submit" class="btn btn-success">Saglabāt</button>
             <br/>

@@ -29,6 +29,10 @@ public class ItemRepository {
             factory = new Configuration().
                     configure().
                     addAnnotatedClass(Item.class).
+                    addAnnotatedClass(Sound.class).
+                    addAnnotatedClass(Other.class).
+                    addAnnotatedClass(Lights.class).
+                    addAnnotatedClass(Stage.class).
                     addAnnotatedClass(LightItem.class).
                     addAnnotatedClass(MicItem.class).
                     addAnnotatedClass(CableItem.class).
@@ -45,6 +49,7 @@ public class ItemRepository {
                     addAnnotatedClass(VideoItem.class).
                     addAnnotatedClass(WorkItem.class).
                     addAnnotatedClass(MiscItem.class).
+                    addAnnotatedClass(AudioItem.class).
                     addAnnotatedClass(InvoiceLine.class).
                     addAnnotatedClass(Invoice.class).
                     addAnnotatedClass(Customer.class).
@@ -96,6 +101,45 @@ public class ItemRepository {
         } catch (HibernateException exception) {
             System.err.println(exception);
         } finally {
+            session.close();
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<Object> getItemsPerClass(Class c) {
+        var session = factory.openSession();
+        try {
+            var allItems= getItems();
+            var items = new ArrayList<>();
+            for (var i: allItems) {
+                if(c.isInstance(i)){
+                    items.add(i);
+                }
+            }
+            return items;
+        } catch (HibernateException exception) {
+            System.err.println(exception);
+        }  finally {
+            session.close();
+        }
+        return new ArrayList<>();
+    }
+
+    public ArrayList<Object> getItemsPerClass(Class c, List<Item> allItems) {
+        var session = factory.openSession();
+        try {
+            var items = new ArrayList<>();
+            for (var n: allItems) {
+                var i = (Item)n;
+                var item = getItem(i.getId());
+                    if(item.getClass().getSuperclass()==c){
+                    items.add(i);
+                }
+            }
+            return items;
+        } catch (HibernateException exception) {
+            System.err.println(exception);
+        }  finally {
             session.close();
         }
         return new ArrayList<>();
@@ -236,6 +280,19 @@ public class ItemRepository {
         for (var c: categories) {
             for (var i: items) {
                 if(Objects.equals(i.getCategory(), c)){
+                    sortedItems.add(i);
+                }
+            }
+        }
+        return sortedItems;
+    }
+
+    public ArrayList<Object> sortPerCategoryO(ArrayList<Object> sortedItems, ArrayList<Object> items) {
+        List<String> categories = getCategoriesPublic();
+        for (var c: categories) {
+            for (var i: items) {
+                var it=(Item)i;
+                if(Objects.equals(it.getCategory(), c)){
                     sortedItems.add(i);
                 }
             }

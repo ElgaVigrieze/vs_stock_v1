@@ -14,6 +14,7 @@ public class CustomerSaveDto {
     private String bank;
     private String swift;
     private String accountNumber;
+    private String contact;
     private String eMail;
     private String phoneNumber;
 }

@@ -1,0 +1,3 @@
+ALTER TABLE `vs_stock`.`customer`
+ADD COLUMN `contact` NVARCHAR(70) NULL AFTER `phone_number`;
+

@@ -37,7 +37,7 @@
             <tr>
                 <th>Apraksts : </th>
                 <td>
-                <input name="description" th:value="${project.getDescription()}"/>
+                    <textarea type="text" cols="70%" id="description" name="description" th:text="${project.getDescription()}"></textarea>
                 </td>
             </tr>
 

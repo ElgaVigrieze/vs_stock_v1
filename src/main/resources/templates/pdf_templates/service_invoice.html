@@ -48,7 +48,7 @@
             <th class = "heading">Konta Nr.: </th>
             <td>LV51HABA0551031251238</td>
         </tr>
-        <tr><td colspan="2">___________________________________________________________________</td></tr>
+        <tr><td colspan="2">______________________________________________________________________</td></tr>
         <tr>
             <th class = "heading">Pasūtītājs: </th>
             <td th:text="${invoice.getCustomer().getName()}"/>
@@ -63,7 +63,7 @@
         </tr>
         <tr>
             <th class = "heading">Norēķinu rekvizīti: </th>
-            <td th:text="${invoice.getCustomer().getBank()}"/>
+            <td th:text="${invoice.getCustomer().getBank()}+ ', '+${invoice.getCustomer().getSwift()}"/>
         </tr>
         <tr>
             <th class = "heading">Konta Nr.: </th>
@@ -77,30 +77,30 @@
         <tr>
             <th width="450px" colspan="2">Nosaukums</th>
             <th></th>
-            <th width="100px">Summa</th>
+            <th style="text-align:center" width="100px">Summa</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="line: ${invoice.getLines()}">
 
-            <td colspan="3" th:text="${line.getDescription()}"/>
-            <td th:text="${#numbers.formatDecimal(line.getSum(),1,'POINT',2,'COMMA')}"/>
+            <td style="padding-right:10px" colspan="3" th:text="${line.getDescription()}"/>
+            <td style="text-align:center" th:text="${#numbers.formatDecimal(line.getSum(),1,'POINT',2,'COMMA')}"/>
         </tr>
-        <tr><td colspan="4">___________________________________________________________________</td></tr>
+        <tr><td colspan="4">______________________________________________________________________</td></tr>
         <tr>
             <td colspan="2"></td>
             <td th:text="'Summa: '"/>
-            <td th:text="${#numbers.formatDecimal(invoice.getTotal(),1,'POINT',2,'COMMA')+' &euro;'}"/>
+            <td style="text-align:right" th:text="${#numbers.formatDecimal(invoice.getTotal(),1,'POINT',2,'COMMA')+' &euro;'}"/>
         </tr>
         <tr>
             <td colspan="2"></td>
             <td th:text="'PVN 21%: '"/>
-            <td th:text="${#numbers.formatDecimal((invoice.getTotal()*0.21),1,'POINT',2,'COMMA')+' &euro;'}"/>
+            <td style="text-align:right" th:text="${#numbers.formatDecimal((invoice.getTotal()*0.21),1,'POINT',2,'COMMA')+' &euro;'}"/>
         </tr>
         <tr>
             <td colspan="2"></td>
             <td th:text="'Kopā: '"/>
-            <td th:text="${#numbers.formatDecimal((invoice.getTotal()+(invoice.getTotal()*0.21)),1,'POINT',2,'COMMA')+' &euro;'}"/>
+            <td style="text-align:right" th:text="${#numbers.formatDecimal((invoice.getTotal()+(invoice.getTotal()*0.21)),1,'POINT',2,'COMMA')+' &euro;'}"/>
         </tr>
         </tbody>
     </table>

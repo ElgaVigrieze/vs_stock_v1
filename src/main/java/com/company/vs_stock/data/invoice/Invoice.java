@@ -71,7 +71,7 @@ public class Invoice {
         this.total=total;
     }
 
-    public Invoice(long id, DocType type, String number, LocalDate date, LocalDate dueDate, Customer customer, Float total, String comment, List<InvoiceLine> lines) {
+    public Invoice(long id, DocType type, String number, LocalDate date, LocalDate dueDate, Customer customer, Float total, String comment, List<InvoiceLine> lines, boolean isPaid) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -81,9 +81,10 @@ public class Invoice {
         this.total = total;
         this.comment = comment;
         this.lines = lines;
+        this.isPaid=isPaid;
     }
 
-    public Invoice(long id, DocType type, String number, LocalDate date, LocalDate dueDate, Customer customer, Float total, String comment, List<InvoiceLine> lines, String deliveryAddress) {
+    public Invoice(long id, DocType type, String number, LocalDate date, LocalDate dueDate, Customer customer, Float total, String comment, List<InvoiceLine> lines, String deliveryAddress, boolean isPaid) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -93,7 +94,19 @@ public class Invoice {
         this.total = total;
         this.comment = comment;
         this.lines = lines;
+        this.isPaid=isPaid;
     this.deliveryAddress = deliveryAddress;}
+
+    public Invoice(long id, String number, DocType type, LocalDate date, LocalDate dueDate, Customer customer, String comment, boolean isPaid) {
+        this.id = id;
+        this.number=number;
+        this.type = type;
+        this.date=date;
+        this.dueDate=dueDate;
+        this.customer = customer;
+        this.comment=comment;
+        this.isPaid=isPaid;
+    }
 
 
     public Float fetchTotal(List<InvoiceLine> lines){

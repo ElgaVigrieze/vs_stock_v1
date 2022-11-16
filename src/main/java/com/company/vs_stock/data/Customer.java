@@ -32,6 +32,8 @@ public class Customer {
     private String eMail;
     @Column(name="phone_number")
     private String phoneNumber;
+    @Column(name="contact")
+    private String contact;
 
     public double getPercentageOfTurnover(long customerId){
         InvoiceRepository repo = new InvoiceRepository();

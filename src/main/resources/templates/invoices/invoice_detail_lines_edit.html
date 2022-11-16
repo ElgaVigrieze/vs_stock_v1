@@ -4,6 +4,19 @@
       layout:decorator="layouts/default">
 <head>
     <div th:replace="fragments/headerstyle :: mystyle"></div>
+    <script>
+    function calculatePriceVAT(){
+        var vat = document.getElementById('VAT'),
+        noVat = document.getElementById('noVAT');
+        vat.value = Math.round((noVat.value*1.21)* 100) / 100;
+        }
+
+    function calculatePriceNoVAT(){
+        var vat = document.getElementById('VAT'),
+        noVat = document.getElementById('noVAT');
+        noVat.value = Math.round((vat.value/1.21)* 100) / 100;
+        }
+    </script>
 </head>
 <body>
 <div th:replace="fragments/header :: myheader"></div>
@@ -16,6 +29,7 @@
             <tr>
                 <th>Apraksts</th>
                 <th>Cena</th>
+                <th>Cena ar PVN</th>
                 <th>Daudzums</th>
                 <th>Pasākums</th>
                 <th></th>
@@ -25,10 +39,13 @@
             <tbody>
             <tr>
                 <td>
-                    <textarea type="text" id="description" name="description" th:text="${line.getDescription()}"></textarea>
+                    <textarea type="text"  rows="2" cols="100" id="description" name="description" th:text="${line.getDescription()}"></textarea>
                 </td>
                 <td>
-                    <input type="number" name="price" step="0.01" th:value="${line.getPrice()}">
+                    <input type="number" onchange="calculatePriceVAT()"  id="noVAT" name="price" step="0.01" th:value="${line.getPrice()}">
+                </td>
+                <td>
+                    <input onchange="calculatePriceNoVAT()" type="number" id="VAT" name="price" step="0.01" th:placeholder="${#numbers.formatDecimal((line.getPrice()*1.21),1,'POINT',2,'COMMA')}">
                 </td>
                 <td>
                     <input type="number" name="quantity" th:value="${line.getQuantity()}">

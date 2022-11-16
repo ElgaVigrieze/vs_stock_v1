@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:float="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
+
 <body>
 <div class="container" th:fragment="itemsList">
-
+    <h3 onclick="ShowAndHide('sound')" STYLE="text-decoration:underline">Skaņa</h3>
+    <div id="sound" style="display:none">
 <h4 onclick="ShowAndHide('speakers')">Tumbas</h4>
 <div id="speakers" style="display:none">
     <table class="table table-hover">
@@ -16,6 +18,7 @@
         <tr/>
         </thead>
         <tbody>
+
         <tr th:each="item: ${speakers}">
             <td th:text="${item.getName()}"/>
             <td th:text="${item.getTotalCount()}"/>
@@ -85,6 +88,9 @@
         </tbody>
     </table>
 </div>
+</div>
+<h3 onclick="ShowAndHide('light')" STYLE="text-decoration:underline">Gaisma</h3>
+<div id="light" style="display:none">
 
 <h4 onclick="ShowAndHide('mspot')" th:value="mspotlight">Kustīgie prožektori</h4>
 
@@ -173,7 +179,55 @@
         </tbody>
     </table>
 </div>
+</div>
 
+
+<h3 onclick="ShowAndHide('stages')" STYLE="text-decoration:underline">Skatuve</h3>
+<div id="stages" style="display:none">
+
+    <h4 onclick="ShowAndHide('truss')" th:value="truss">Fermas</h4>
+    <div id="truss"  style="display:none">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width: 70%" >Nosaukums</th>
+                <th style="width: 15%" >Pieejams</th>
+                <th style="width: 15%" >Pievienot</th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${trusses}">
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getTotalCount()}"/>
+                <td><input type="checkbox" name="check" th:value="${item.getId()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4 onclick="ShowAndHide('stage')" th:value="stage">Skatuves tehnika</h4>
+    <div id="stage" style="display:none">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width: 70%" >Nosaukums</th>
+                <th style="width: 15%" >Pieejams</th>
+                <th style="width: 15%" >Pievienot</th>
+            <tr/>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${stage}">
+                <td th:text="${item.getName()}"/>
+                <td th:text="${item.getTotalCount()}"/>
+                <td><input type="checkbox" name="check" th:value="${item.getId()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h3 onclick="ShowAndHide('other')" STYLE="text-decoration:underline">Citi</h3>
+<div id="other" style="display:none">
 <h4 onclick="ShowAndHide('stand')" th:value="stand">Statīvi</h4>
 
 <div id="stand" style="display:none">
@@ -215,45 +269,7 @@
     </table>
 </div>
 
-<h4 onclick="ShowAndHide('truss')" th:value="truss">Fermas</h4>
-<div id="truss"  style="display:none">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th style="width: 70%" >Nosaukums</th>
-            <th style="width: 15%" >Pieejams</th>
-            <th style="width: 15%" >Pievienot</th>
-        <tr/>
-        </thead>
-        <tbody>
-        <tr th:each="item: ${trusses}">
-            <td th:text="${item.getName()}"/>
-            <td th:text="${item.getTotalCount()}"/>
-            <td><input type="checkbox" name="check" th:value="${item.getId()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
-<h4 onclick="ShowAndHide('stage')" th:value="stage">Skatuves tehnika</h4>
-<div id="stage" style="display:none">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th style="width: 70%" >Nosaukums</th>
-            <th style="width: 15%" >Pieejams</th>
-            <th style="width: 15%" >Pievienot</th>
-        <tr/>
-        </thead>
-        <tbody>
-        <tr th:each="item: ${stage}">
-            <td th:text="${item.getName()}"/>
-            <td th:text="${item.getTotalCount()}"/>
-            <td><input type="checkbox" name="check" th:value="${item.getId()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -315,6 +331,7 @@
         </tr>
         </tbody>
     </table>
+</div>
 </div>
 
 <SCRIPT>

@@ -25,15 +25,6 @@
     <form method="post" th:action="${'/projects/'+projectId}">
         <table>
             <tr>
-                <th>Id: </th>
-                <td th:text="${project.getId()}"/>
-            </tr>
-            <tr>
-                <th>Nosaukums: </th>
-                <td th:text="${project.getTitle()}"/>
-            </tr>
-
-            <tr>
                 <th>Vieta: </th>
                 <td th:text="${project.getLocation()}"/>
             </tr>
@@ -52,7 +43,7 @@
         <a th:href="${'/projects/'+projectId+'/confirm'}" class="btn btn-danger" role="button">Dzēst pasākumu</a>
         <a th:href="${'/projects/'+projectId+'/add'}" class="btn btn-success" role="button">Pievienot tehniku</a>
         <a th:href="${'/projects/'+projectId+'/list/edit'}" class="btn btn-secondary" role="button">Rediģēt sarakstu</a>
-        <a th:target="_blank" th:href="${'/projects/'+projectId+'/date'}" class="btn btn-secondary" role="button">Eksportēt PDF</a>
+        <a th:target="_blank" th:href="${'/projects/'+projectId+'/date'}" class="btn btn-secondary" role="button">Izveidot PDF</a>
         <a th:href="${'/projects/'+projectId+'/gallery'}" class="btn btn-secondary" role="button">Galerija</a>
         <a th:href="${'/projects/'}" class="btn btn-secondary" role="button">Atpakaļ</a>
         <header ><h2 th:text="'Kopsumma: ' + ${sum} + ' EUR / '+${sumVat} + ' EUR'" > </h2></header>
@@ -62,7 +53,6 @@
         <header ></header>
         <thead>
         <tr>
-            <th style="width: 70px" >Attēls</th>
             <th style="width: 300px" >Nosaukums</th>
             <th style="width: 70px" >Skaits</th>
             <th style="width: 70px" >Cena</th>
@@ -70,8 +60,9 @@
         <tr/>
         </thead>
         <tbody>
+
         <tr th:each="item: ${items}">
-            <td> <img th:src="${item.getPicEncoded()}" width="100px" height="100px"/></td>
+<!--            <td> <img th:src="${item.getPicEncoded()}" width="100px" height="100px"/></td>-->
             <td th:text="${item.getName()}" />
 <!--            <td th:text="${item.getCategory()}"/>-->
             <td>

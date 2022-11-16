@@ -162,7 +162,7 @@ public class ItemController {
 
 
         switch(item.getCategory()){
-            case SPEAKER,BACKLINE,MIC,CONSOLE,STAND,STAGE, CABLE,MISC,VIDEO,TRANSPORT,WORK -> { return "items/items_edit";
+            case SPEAKER,BACKLINE,MIC,CONSOLE,AUDIO,STAND,STAGE, CABLE,MISC,VIDEO,TRANSPORT,WORK -> { return "items/items_edit";
             }
             case LIGHTS,MSPOTLIGHT,NMSPOTLIGHT -> { return "items/items_edit_light";
             }
